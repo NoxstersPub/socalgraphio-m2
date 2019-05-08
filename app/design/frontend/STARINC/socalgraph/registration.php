@@ -6,4 +6,4 @@
 
 use \Magento\Framework\Component\ComponentRegistrar;
 
-ComponentRegistrar::register(ComponentRegistrar::THEME, 'STARINC/socalgraph', __DIR__);
+ComponentRegistrar::register(ComponentRegistrar::THEME, 'frontend/STARINC/socalgraph', __DIR__);
