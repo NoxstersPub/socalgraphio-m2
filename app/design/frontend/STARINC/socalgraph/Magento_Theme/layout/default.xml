@@ -16,11 +16,7 @@
         <referenceBlock name="header.links" remove="true"/>       
 		<move element="copyright" destination="before.body.end"/>
 		<referenceContainer name="header-wrapper">
-		   <block class="Magento\Cms\Block\Block" name="cms_header">
-			<arguments>
-			  <argument name="block_id" xsi:type="string">2</argument>
-			</arguments>
-		  </block>
+			<block class="Magento\Theme\Block\Html\Header" name="top.header" as="customheader" template="Magento_Theme::html/header.phtml" />		  
 		  <block class="Magento\Cms\Block\Block" name="cms_menu">
 			<arguments>
 			  <argument name="block_id" xsi:type="string">1</argument>

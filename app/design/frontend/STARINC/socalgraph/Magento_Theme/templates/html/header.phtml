@@ -1,0 +1,103 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header $block
+ */
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+?>
+<header>
+        <div class="header">
+            <div class="header_left"><a class="header_logo" href="index.html"></a><a class="header_left_menu" href="#"><i></i><span>Menu</span></a><a class="header_left_search" href="#"><i></i><span>Search</span></a></div>
+            <div class="header_right">
+				<?php if(!$customerSession->isLoggedIn()) { ?>
+				<a class="header_login" href="<?php echo $this->getUrl("customer/account/login");?>"></a><a class="header_lock" href="#"></a>
+				<?php }else { ?>
+                <ul class="header_links">
+                    <li><a href="#">Estimate Request</a></li>
+                    <li><a href="<?php echo $this->getUrl("contact");?>">Contact Us</a></li>
+                </ul>
+                <div class="header_notification"><span class="icon">2</span>
+                    <div class="header_notification_opener"></div>
+                    <div class="header_notification_popup_bg"></div>
+                    <div class="header_notification_popup">
+                        <div class="notification_popup_head">
+                            <div class="notification_popup_title">NOTIFICATIONS <span>1</span></div>
+                            <div class="notification_popup_markall">mark all as read</div>
+                        </div>
+                        <div class="notification_popup_list"><a class="notification_popup_item" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon1.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">RMA Request</div>
+                                    <div class="notification_popup_item_p">job #1234 has requested are run. Find out more details.</div>
+                                    <div class="notification_popup_item_date">Today 8:30am</div>
+                                </div>
+                            </a><a class="notification_popup_item readed" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon2.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">New Estimate</div>
+                                    <div class="notification_popup_item_p">8.5 x 11x life size banner and installation</div>
+                                    <div class="notification_popup_item_date">May 11<span>th </span>12:30am</div>
+                                </div>
+                            </a><a class="notification_popup_item readed" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon3.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">Estimate Approved!</div>
+                                    <div class="notification_popup_item_p">Estimate #1234 has been approved by customer @bluemark</div>
+                                    <div class="notification_popup_item_date">May 13<span>th </span>9:30am</div>
+                                </div>
+                            </a><a class="notification_popup_item readed" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon4.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">Change Order Request</div>
+                                    <div class="notification_popup_item_p">Job #1234 has a change order that needs approved.</div>
+                                    <div class="notification_popup_item_date">May 13<span>th </span>9:30am</div>
+                                </div>
+                            </a><a class="notification_popup_item" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon5.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">Your Item Shipped!</div>
+                                    <div class="notification_popup_item_p">Order #1234 has been shipped and is now in transit.</div>
+                                    <div class="notification_popup_item_date">Today 5 hours ago</div>
+                                </div>
+                            </a><a class="notification_popup_item" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon6.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">Payment Approved</div>
+                                    <div class="notification_popup_item_p">Your payment has been approved. Thank You For Your Business!</div>
+                                    <div class="notification_popup_item_date">May 11<span>th </span>12:30am</div>
+                                </div>
+                            </a><a class="notification_popup_item" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon7.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">New Invoice #2343</div>
+                                    <div class="notification_popup_item_p">Final invoice for job #1234 is ready for payment.</div>
+                                    <div class="notification_popup_item_date">May 13<span>th </span>9:30pm</div>
+                                </div>
+                            </a><a class="notification_popup_item" href="#">
+                                <div class="notification_popup_item_icon" style="background-image: url(img/icon8.png)"></div>
+                                <div class="notification_popup_item_text">
+                                    <div class="notification_popup_item_title">Job Delivered!</div>
+                                    <div class="notification_popup_item_p">Job #1243 has been delivered</div>
+                                    <div class="notification_popup_item_date">May 13<span>th </span>2019 9:30pm</div>
+                                </div>
+                            </a></div>
+                        <div class="notification_popup_bottombutton"><a class="button button_white" href="#">VIEW MORE</a></div>
+                    </div>
+                </div>
+                <div class="header_user">
+                    <div class="header_user_photo" style="background-image: url('<?php echo $this->getViewFileUrl('Magento_Theme::img/header_user_photo.jpg'); ?>')"></div>
+                    <div class="header_user_name">Sales Rep</div>
+                    <div class="header_user_menuopener menuopener"><span></span><span></span><span></span></div>
+                </div>
+				<?php }?>
+            </div>
+        </div>
+    </header>
+	
