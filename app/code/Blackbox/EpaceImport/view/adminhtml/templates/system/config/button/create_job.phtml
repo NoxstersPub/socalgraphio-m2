@@ -1,0 +1,23 @@
+ 
+
+<div class="pp-buttons-container">
+     <button id="<?php echo $block->getId() ?>" onclick="createJob()">
+        <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+    </button>
+</div>
+
+
+<script type="text/javascript">
+   function createJob() {
+        var customer = encodeURIComponent(document.getElementById('epace_test_requests_customer').value);
+        var description = encodeURIComponent(document.getElementById('epace_test_requests_description').value);
+        setLocation('<?=$this->getUrl('epace/index/testCreateJob', array('_current'=>true))?>' + '?customer=' + customer + '&description=' + description);
+    }
+</script>
+
+ 
+
+
+
+
+

@@ -1,0 +1,22 @@
+<div class="pp-buttons-container">
+     <button id="<?php echo $block->getId() ?>" onclick="createEmployeeTime()">
+        <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+    </button>
+</div>
+
+<script type="text/javascript">
+    function createEmployeeTime() {
+        var employee = encodeURIComponent(document.getElementById('epace_test_requests_employee').value);
+        var startDate = encodeURIComponent(document.getElementById('epace_test_requests_start_date').value);
+        var startTime = encodeURIComponent(document.getElementById('epace_test_requests_start_time').value);
+        var stopDate = encodeURIComponent(document.getElementById('epace_test_requests_stop_date').value);
+        var stopTime = encodeURIComponent(document.getElementById('epace_test_requests_stop_time').value);
+        setLocation('<?=$this->getUrl('epace/index/testCreateEmployeeTime', array('_current'=>true))?>' +
+            '?employee=' + employee +
+            '&startDate=' + startDate +
+            '&startTime=' + startTime +
+            '&stopDate=' + stopDate +
+            '&stopTime=' + stopTime
+        );
+    }
+</script>
