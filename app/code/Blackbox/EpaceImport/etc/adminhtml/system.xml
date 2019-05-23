@@ -9,7 +9,7 @@
             <label>Epace</label>
             <tab>blackbox</tab>
             <resource>Blackbox_EpaceImport::epaceimport_config</resource>
-				<group id="main_setting" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0">
+				<group id="main_settings" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0">
 						<label>Main Setting</label>
 						<field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
 							<label>Enable</label>

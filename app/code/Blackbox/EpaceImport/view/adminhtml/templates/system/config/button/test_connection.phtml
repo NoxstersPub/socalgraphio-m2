@@ -1,0 +1,30 @@
+<div class="pp-buttons-container">
+     
+    <a href="javascript:void(0)" class="system_config_test" id="<?php echo $block->getId() ?>" > <?php  echo $block->escapeHtml($block->getButtonLabel()); ?></a>
+</div>
+
+<style type="text/css">
+    .system_config_test {
+        border: 1px solid #ccc;
+        background: #ccc;
+        padding: 10px;
+    }
+</style>
+
+
+<script>
+ require(['jquery'], function ($){
+  $("#test_connection").click(function() {
+        var in1 = encodeURIComponent($("#epace_test_requests_in1").val());
+        var in2 = encodeURIComponent($("#epace_test_requests_in2").val());
+        $('#test_connection').attr('href','<?php echo $this->getUrl('epace/index/index'); ?>' + '?in1=' + in1 + '&in2=' + in2);
+
+   })
+  });
+</script>
+
+
+
+
+
+     
