@@ -32,7 +32,7 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
     protected $api;
     protected $namespace = 'soap';
     protected $auth;
-    protected $username, $password, $baseUrl, $company;
+    protected $username, $password, $baseUrl, $company,$contactId;
     protected $event = null;
 
     const JOB_STATUS_OPEN = 'O';
@@ -42,22 +42,37 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
 	 public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Cms\Model\Template\FilterProvider $filterProvider
+        \Magento\Cms\Model\Template\FilterProvider $filterProvider,
+        \Blackbox\Soap\Model\Api $api
         ) {
         parent::__construct($context);
         $this->_filterProvider = $filterProvider;
         $this->_storeManager = $storeManager;
-      
-        
+       // $this->api = $api;
+
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $model = $objectManager->create('\Blackbox\Soap\Model\Api');
+        $this->api =  $model;
   /*     $this->api = Mage::getModel('blackbox_soap/api', array(
             'baseUrl' => $this->baseUrl = Mage::getStoreConfig('epace/main_settings/base_url'),
             'actionBaseUrl' => '',
             'namespace' => $this->namespace
         ));
 */
+        $this->baseUrl =  $this->scopeConfig->getValue('epace/main_settings/base_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null);
+
+        $this->username =  $this->scopeConfig->getValue('epace/main_settings/username', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null);
+
+        $this->password =  $this->scopeConfig->getValue('epace/main_settings/password', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null);
+
+        $this->contactId =  $this->scopeConfig->getValue('epace/main_settings/contact_id', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null);
+
         $this->company =  $this->scopeConfig->getValue('epace/main_settings/company', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null);
- 
-       $this->setAuthInfo($this->scopeConfig->getValue('epace/main_settings/username', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null),$this->scopeConfig->getValue('epace/main_settings/password', \Magento\Store\Model\ScopeInterface::SCOPE_STORE,null));
+
+        $this->api->init($this->baseUrl, $actionBaseUrl = '', $namespace = 'soap', $namespaces = array());
+
+
+       $this->setAuthInfo( $this->username, $this->password);
 
     }
 
@@ -68,7 +83,7 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
         $this->auth = base64_encode($username . ':' . $password);
     }
 
-    public function setEvent(Blackbox_Epace_Model_Event $event)
+    public function setEvent($event)
     {
         if ($event == null) {
             $this->api->setLogCallback(null);
@@ -97,6 +112,11 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
     public function getHost()
     {
         return $this->baseUrl;
+    }
+
+    public function getcontactId()
+    {
+        return $this->contactId;
     }
 
     public function readCostCenter($id)
@@ -251,9 +271,10 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
         $params = [
             $method => $methodParams
         ];
-
+         
+       
         $body = $this->sendParamsToServer(null, $params, '', $this->getMethodUrl('FindObjects'), array($this->getAuthHeader()));
-
+ 
         $responseNode = $body->children('urn://pace2020.com/epace/sdk/FindObjects')->{$method . 'Response'};
         if (!$responseNode) {
             $this->throwException('No response node found.', $body);
@@ -295,10 +316,10 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
     {
         $settings = array_merge(array(
             'employee' => $employee,
-            'startDate' => (new DateTime($startDate))->format('Y-m-d\TH:i:s.0000\Z'),
-            'startTime' => (new DateTime($startTime))->format('1970-01-01\TH:i:s.0000\Z'),
-            'stopDate' => $stopDate ? (new DateTime($stopDate))->format('Y-m-d\TH:i:s.0000\Z') : null,
-            'stopTime' => $stopTime ? (new DateTime($stopTime))->format('1970-01-01\TH:i:s.0000\Z') : null
+            'startDate' => (new \DateTime($startDate))->format('Y-m-d\TH:i:s.0000\Z'),
+            'startTime' => (new \DateTime($startTime))->format('1970-01-01\TH:i:s.0000\Z'),
+            'stopDate' => $stopDate ? (new \DateTime($stopDate))->format('Y-m-d\TH:i:s.0000\Z') : null,
+            'stopTime' => $stopTime ? (new \DateTime($stopTime))->format('1970-01-01\TH:i:s.0000\Z') : null
         ), $otherSettings);
 
         return $this->createObject($settings, 'employeeTime');
@@ -375,6 +396,7 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
 
     public function createObject($settings, $objectType)
     {
+
         $settingNodes = $this->settingsToNodes($settings);
 
         $params = array(
@@ -388,6 +410,7 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
 //        $responseNodeName = 'create' . ucfirst($objectType) . 'Response';
 //        return (array)$this->api->xmlToArray($result->children('ns1', true)->$responseNodeName->children()->out->children('ns2', true));
 
+ 
         return $this->getObjectResponse($params, 'create', $objectType);
     }
 
@@ -517,11 +540,13 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
     protected function getObjectResponse($params, $method, $objectType, $ns1 = null)
     {
         $result = $this->sendParamsToServer(null, $params, '', $this->getMethodUrl(ucfirst($method) . 'Object'), array($this->getAuthHeader()));
+
         return $this->parseResponseBody($result, $method . ucfirst($objectType), $ns1);
     }
 
-    protected function parseResponseBody(SimpleXMLElement $body, $method, $ns1 = null)
+    protected function parseResponseBody(\SimpleXMLElement $body, $method, $ns1 = null)
     {
+
         $responseNodeName = $method . 'Response';
 
         if (is_null($ns1)) {
@@ -558,13 +583,15 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
 
     protected function sendParamsToServer($headerParams, $bodyParams, $action, $url = null, $headers = null, $api = null)
     {
-    
+   
         if (!$api) {
             $api = $this->api;
+
         }
-
+ 
         $response = $api->sendParamsToServer($headerParams, $bodyParams, $action, $url, $headers);
-
+        
+         
         if (!$response) {
             throw new Exception('No response. Method: "' . $url . '"');
         }
@@ -603,8 +630,6 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
     }
 
     protected function throwException($message, $response) {
-        $e = new Blackbox_Epace_Model_Exception($message);
-        $e->setResponse($response);
-        throw $e;
+       return $message.' '.$response;
     }
 }
