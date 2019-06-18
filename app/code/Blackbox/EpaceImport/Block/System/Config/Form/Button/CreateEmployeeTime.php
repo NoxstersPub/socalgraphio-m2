@@ -59,7 +59,7 @@ class CreateEmployeeTime extends \Magento\Config\Block\System\Config\Form\Field
         $this->addData(
             [
                 'id'        => 'epace_create_employee_time_button',
-                'button_label'     => _('Create Employee Time')
+                'button_label'     => __('Create Employee Time')
                // 'onclick'   => 'javascript:check(); return false;'
             ]
         );

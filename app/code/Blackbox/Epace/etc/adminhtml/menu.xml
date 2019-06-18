@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
     <menu>
         <add id="Blackbox_Epace::parent" title="Epace" module="Blackbox_Epace" sortOrder="100" resource="Blackbox_Epace::parent"/>
-        <add id="Blackbox_Epace::index" title="Epace Index" module="Blackbox_Epace" sortOrder="10" action="epace/index" resource="Blackbox_Epace::index" parent="Blackbox_Epace::parent"/>
+        <add id="Blackbox_Epace::index" title="Epace" module="Blackbox_Epace" sortOrder="10" action="epace/epace" resource="Blackbox_Epace::index" parent="Blackbox_Epace::parent"/>
 		
     </menu>
 </config>

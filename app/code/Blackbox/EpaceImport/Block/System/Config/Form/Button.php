@@ -56,7 +56,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
         $this->addData(
             [
                 'id'        => 'test_connection',
-                'button_label'     => _('Test Connection')
+                'button_label'     => __('Test Connection')
                // 'onclick'   => 'javascript:check(); return false;'
             ]
         );

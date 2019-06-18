@@ -56,7 +56,7 @@ class CreateJob extends \Magento\Config\Block\System\Config\Form\Field
         $this->addData(
             [
                 'id'        => 'test_create_job_button',
-                'button_label'     => _('Create Job')
+                'button_label'     => __('Create Job')
                // 'onclick'   => 'javascript:check(); return false;'
             ]
         );
