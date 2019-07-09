@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_Epace_Model_Event_Source_Name
+namespace Blackbox\Epace\Model\Event\Source;
+
+class Name
 {
     /**
      * Get options in "key-value" format
@@ -10,8 +12,11 @@ class Blackbox_Epace_Model_Event_Source_Name
     public function toArray()
     {
         $result = array();
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $model = $objectManager->create('\Blackbox\Epace\Model\Event');
 
-        $events = Mage::getModel('epace/event')->getCollection();
+
+        $events = $model->getCollection();
         $events->getSelect()
         ->columns('name')
         ->group('name');

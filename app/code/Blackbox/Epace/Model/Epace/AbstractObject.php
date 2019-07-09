@@ -1,6 +1,6 @@
 <?php
 
-namespace Blackbox\Epace\Model;
+namespace Blackbox\Epace\Model\Epace;
 
 abstract class AbstractObject extends Varien_Object {
 
@@ -36,7 +36,7 @@ abstract class AbstractObject extends Varien_Object {
         if (empty($this->_objectType)) {
             throw new \Exception('Object type should be initialized in _construct method.');
         }
-        if ($cache instanceof Blackbox_Epace_Model_Epace_Cache) {
+        if ($cache instanceof \Blackbox\Epace\Model\Epace\Cache) {
             $this->_cache = $cache;
         }
     }

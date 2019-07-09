@@ -1,6 +1,6 @@
 <?php
 
-namespace Blackbox\Epace\Model;
+namespace Blackbox\Epace\Model\Epace;
 
 class Status
 {
