@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_Activity_Code[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Activity_Code_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_Activity_Code_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Activity\Code;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/activity_code');
+        $this->_init('\Blackbox\Epace\Model\Epace\Activity\Code');
     }
 }

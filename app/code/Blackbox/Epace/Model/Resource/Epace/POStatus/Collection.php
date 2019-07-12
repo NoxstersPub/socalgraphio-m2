@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_POStatus[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_POStatus_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_POStatus_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\POStatus;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/pOStatus');
+        $this->_init('Blackbox\Epace\Model\Epace\POStatus');
     }
 }

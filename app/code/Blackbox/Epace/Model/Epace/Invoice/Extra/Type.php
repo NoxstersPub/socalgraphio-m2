@@ -1,6 +1,6 @@
 <?php
 
-namespace Blackbox\Epace\Model\Epace\Invoice_Extra;
+namespace Blackbox\Epace\Model\Epace\Invoice\Extra;
 
 class Type extends \Blackbox\Epace\Model\Epace\Invoice\ChildAbstract
 {

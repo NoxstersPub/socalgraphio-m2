@@ -1,11 +1,8 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_AbstractObject[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Collection
- */
-abstract class Blackbox_Epace_Model_Resource_Epace_Collection extends Varien_Data_Collection
+namespace Blackbox\Epace\Model\Resource\Epace;
+
+abstract class Collection extends \Magento\Framework\Data\Collection
 {
     /**
      * Model name
@@ -57,7 +54,7 @@ abstract class Blackbox_Epace_Model_Resource_Epace_Collection extends Varien_Dat
         if (empty($this->_model)) {
             throw new \Exception('Collection model should be initialized in _construct method.');
         }
-        if ($cache instanceof Blackbox_Epace_Model_Epace_Cache) {
+        if ($cache instanceof \Blackbox\Epace\Model\Epace\Cache) {
             $this->_cache = $cache;
         }
     }
