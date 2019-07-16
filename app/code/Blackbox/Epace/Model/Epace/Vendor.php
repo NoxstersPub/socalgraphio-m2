@@ -1,7 +1,7 @@
 <?php
 namespace Blackbox\Epace\Model\Epace;
 
-class Vendor extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Vendor extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

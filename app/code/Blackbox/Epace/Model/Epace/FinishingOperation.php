@@ -1,7 +1,7 @@
 <?php
 namespace Blackbox\Epace\Model\Epace;
 
-class FinishingOperation extends \Magento\Framework\Model\Epace\AbstractModel
+class FinishingOperation extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

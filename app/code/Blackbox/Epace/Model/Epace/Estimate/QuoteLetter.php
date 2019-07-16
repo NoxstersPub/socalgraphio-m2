@@ -1,6 +1,6 @@
 <?php
 
-namespace \Blackbox\Epace\Model\Epace\Estimate;
+namespace Blackbox\Epace\Model\Epace\Estimate;
 
 class QuoteLetter extends \Blackbox\Epace\Model\Epace\Estimate\AbstractChild
 {

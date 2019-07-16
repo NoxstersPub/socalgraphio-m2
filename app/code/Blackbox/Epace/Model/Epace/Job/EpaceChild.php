@@ -1,6 +1,8 @@
 <?php
 
-abstract class Blackbox_Epace_Model_Epace_Job_AbstractChild extends Blackbox_Epace_Model_Epace_AbstractObject
+namespace Blackbox\Epace\Model\Epace\Job;
+
+abstract class EpaceChild extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     /**
      * @return string
@@ -18,7 +20,7 @@ abstract class Blackbox_Epace_Model_Epace_Job_AbstractChild extends Blackbox_Epa
         return $this->_getObject('job', 'job', 'efi/job');
     }
 
-    public function setJob(Blackbox_Epace_Model_Epace_Job $job)
+    public function setJob(\Blackbox\Epace\Model\Epace\Job $job)
     {
         return $this->_setObject('job', $job);
     }

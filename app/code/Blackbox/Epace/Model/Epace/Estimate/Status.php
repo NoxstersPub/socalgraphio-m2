@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Estimate; 
 
-class Status extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Status extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     const STATUS_OPEN = 1;
     const STATUS_NEED_INFO = 4;

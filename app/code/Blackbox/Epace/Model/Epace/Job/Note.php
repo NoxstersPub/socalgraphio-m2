@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Job;
 
-class Note extends \Blackbox\Epace\Model\Epace\Job\AbstractChild
+class Note extends \Blackbox\Epace\Model\Epace\Job\EpaceChild
 {
     protected function _construct()
     {

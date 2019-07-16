@@ -5,7 +5,9 @@
  *
  * Class Blackbox_Epace_Model_Resource_Epace_Estimate_Collection
  */
-class Blackbox_Epace_Model_Resource_Epace_Estimate_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Estimate;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {

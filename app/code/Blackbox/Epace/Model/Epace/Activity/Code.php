@@ -1,7 +1,7 @@
 <?php
 namespace Blackbox\Epace\Model\Epace\Activity;
 
-class Code extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Code extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

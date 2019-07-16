@@ -1,6 +1,6 @@
 <?php
 namespace Blackbox\Epace\Model\Epace\Estimate\QuoteLetter;
-class Note extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Note extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

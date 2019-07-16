@@ -4,7 +4,7 @@ namespace Blackbox\Epace\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
 
-class Object extends Mage_Core_Helper_Abstract
+class Object extends \Magento\Framework\App\Helper\AbstractHelper
 {
     protected $cacheEnabled = true;
 
@@ -29,9 +29,11 @@ class Object extends Mage_Core_Helper_Abstract
             if (isset($this->cache[$type][$id])) {
                 return $this->cache[$type][$id];
             }
-            return $this->cache[$type][$id] = Mage::getModel($type)->setGlobal(true)->load($id);
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $model = $objectManager->create($type);
+            return $this->cache[$type][$id] = $model->setGlobal(true)->load($id);
         } else {
-            return Mage::getModel($type)->load($id);
+            return $objectManager->create($type)->load($id);
         }
     }
 }

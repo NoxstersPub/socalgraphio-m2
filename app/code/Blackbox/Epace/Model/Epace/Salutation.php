@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace;
 
-class Salutation extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Salutation extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

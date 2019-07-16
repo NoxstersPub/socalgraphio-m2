@@ -3,7 +3,7 @@ namespace Blackbox\Epace\Model\Epace\Estimate\Part;
 
 use \Blackbox\Epace\Model\Epace\Estimate\Part\ChildTrait;
 
-class SizeAllowance extends \Blackbox\Epace\Model\Epace\AbstractObject
+class SizeAllowance extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

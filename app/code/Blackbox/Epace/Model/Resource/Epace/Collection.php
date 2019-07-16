@@ -24,7 +24,7 @@ abstract class Blackbox_Epace_Model_Resource_Epace_Collection extends Varien_Dat
     /**
      * Resource instance
      *
-     * @var Blackbox_Epace_Model_Epace_AbstractObject
+     * @var \Blackbox\Epace\Model\Epace\EpaceObject
      */
     protected $_resource;
 
@@ -119,7 +119,7 @@ abstract class Blackbox_Epace_Model_Resource_Epace_Collection extends Varien_Dat
     /**
      * Get resource instance
      *
-     * @return Blackbox_Epace_Model_Epace_AbstractObject
+     * @return \Blackbox\Epace\Model\Epace\EpaceObject
      */
     public function getResource()
     {
@@ -146,7 +146,7 @@ abstract class Blackbox_Epace_Model_Resource_Epace_Collection extends Varien_Dat
             if ($this->_cache) {
                 $item = $this->_cache->load($this->_itemObjectClass, $id);
             } else {
-                /** @var Blackbox_Epace_Model_Epace_AbstractObject $item */
+                /** @var \Blackbox\Epace\Model\Epace\EpaceObject $item */
                 $item = $this->getNewEmptyItem();
                 $item->load($id);
             }

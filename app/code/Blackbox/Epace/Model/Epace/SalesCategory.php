@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace;
 
-class SalesCategory extends \Blackbox\Epace\Model\Epace\AbstractObject
+class SalesCategory extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {
