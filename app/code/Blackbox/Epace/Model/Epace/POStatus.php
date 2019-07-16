@@ -3,7 +3,7 @@ namespace Blackbox\Epace\Model\Epace;
 
 use \Blackbox\Epace\Model\Epace\PersonsTrait;
 
-class POStatus extends \Blackbox\Epace\Model\Epace\AbstractObject 
+class POStatus extends \Blackbox\Epace\Model\Epace\EpaceObject 
 {
     protected function _construct()
     {

@@ -4,7 +4,7 @@ namespace Blackbox\Epace\Model\Epace;
 
 use \Blackbox\Epace\Model\Epace\PersonsTrait;
 
-class Estimate extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Estimate extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     
 

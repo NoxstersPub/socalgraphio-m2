@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Prepress;
 
-class Item extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Item extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

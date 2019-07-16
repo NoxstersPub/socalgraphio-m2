@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Ship;
 
-class Provider extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Provider extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

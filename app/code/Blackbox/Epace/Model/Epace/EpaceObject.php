@@ -2,32 +2,16 @@
 
 namespace Blackbox\Epace\Model\Epace;
 
-abstract class AbstractObject extends Varien_Object {
-
+abstract class EpaceObject extends \Magento\Framework\DataObjectFactory 
+{
     public static $debug = false;
-
-    /**
-     * @var Blackbox_Epace_Helper_Api
-     */
     protected $_api;
-
-    /**
-     * @var Blackbox_Epace_Helper_Mongo
-     */
     protected $_monoApi;
-
-    /**
-     * @var string
-     */
     protected $_objectType;
     private $_childItems = [];
     private $_links = [];
     private $_disposing = false;
     private $global = false;
-
-    /**
-     * @var Blackbox_Epace_Model_Epace_Cache
-     */
     private $_cache = null;
     public static $useMongo = false;
 
@@ -80,9 +64,6 @@ abstract class AbstractObject extends Varien_Object {
         $this->setIdFieldName($idFieldName);
     }
 
-    /**
-     * @return Blackbox_Epace_Helper_Api
-     */
     public function getApi() {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         if (self::$useMongo) {
@@ -98,14 +79,8 @@ abstract class AbstractObject extends Varien_Object {
         }
     }
 
-    /**
-     * @return array
-     */
     public abstract function getDefinition();
 
-    /**
-     * @return bool
-     */
     public function isGlobal() {
         return $this->global;
     }
@@ -116,11 +91,6 @@ abstract class AbstractObject extends Varien_Object {
         return $this;
     }
 
-    /**
-     * Clear instance and all related instances
-     *
-     * @return $this
-     */
     public function dispose() {
         if ($this->_disposing) {
             return $this;
@@ -154,7 +124,7 @@ abstract class AbstractObject extends Varien_Object {
             $this->unsetData();
 
             return $this;
-        } finally {
+        } catch (\Exception $e) {
             $this->_disposing = false;
         }
     }
@@ -232,7 +202,7 @@ abstract class AbstractObject extends Varien_Object {
      * @param $modelClass
      * @param $id
      * @param bool $globalCache
-     * @return Blackbox_Epace_Model_Epace_AbstractObject
+     * @return \Blackbox\Epace\Model\Epace\EpaceObject
      */
     protected function _loadObject($modelClass, $id, $globalCache = false) {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -242,16 +212,15 @@ abstract class AbstractObject extends Varien_Object {
         } else {
             $object = $this->_getCache()->load($modelClass, $id);
         }
-        // commented for the time being follow up
-//        if (!$object) {
-//            $object = Mage::getModel($modelClass);
-//        }
+        if (!$object) {
+            $object = $objectManager->create($modelClass);
+        }
         return $object;
     }
 
     protected function _getChildItems($collectionName, $filters, callable $initCallback = null) {
         if (!isset($this->_childItems[$collectionName])) {
-            /** @var Blackbox_Epace_Model_Resource_Epace_Collection $collection */
+            /** @var \Blackbox\Epace\Model\Resource\Epace\Collection $collection */
             $collection = $this->_getCollection($collectionName);
             foreach ($filters as $field => $value) {
                 $collection->addFilter($field, $value);
@@ -264,28 +233,17 @@ abstract class AbstractObject extends Varien_Object {
 
         return $this->_childItems[$collectionName];
     }
-
-    /**
-     * @return Blackbox_Epace_Model_Epace_Cache
-     */
     private function _getCache() {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         if (!$this->_cache) {
             // no model found in magento 1. follow up
-//            $this->_cache = $objectManager->create('\Blackbox\Epace\Helper\Object')
-//                    Mage::getModel('efi/cache');
+            $this->_cache = $objectManager->create('\Blackbox\Epace\Model\Epace\Cache');
         }
         return $this->_cache;
     }
-
-    /**
-     * @param $collectionName
-     * @return Blackbox_Epace_Model_Resource_Epace_Collection
-     */
-    
-    // follow up
-//    protected function _getCollection($collectionName) {
+    protected function _getCollection($collectionName) {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        return $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Collection');
 //        return Mage::getResourceModel($collectionName, $this->_getCache());
-//    }
-
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
-namespace \Blackbox\Epace\Model\Epace\Estimate\Product;
-class PriceSummary extends \Blackbox\Epace\Model\Epace\AbstractObject
+namespace Blackbox\Epace\Model\Epace\Estimate\Product;
+class PriceSummary extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

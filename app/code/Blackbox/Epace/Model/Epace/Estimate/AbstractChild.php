@@ -1,6 +1,6 @@
 <?php
 namespace Blackbox\Epace\Model\Epace\Estimate;
-abstract class AbstractChild extends \Blackbox\Epace\Model\Epace\AbstractObject
+abstract class AbstractChild extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     /**
      * @return \Blackbox\Epace\Model\Epace\Estimate|false

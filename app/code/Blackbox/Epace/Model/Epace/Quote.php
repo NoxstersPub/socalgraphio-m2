@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace;
 
-class Quote extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Quote extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

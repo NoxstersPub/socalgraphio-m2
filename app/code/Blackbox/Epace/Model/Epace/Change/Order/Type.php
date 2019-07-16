@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Change\Order;
 
-class Type extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Type extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

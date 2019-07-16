@@ -1,7 +1,7 @@
 <?php
 namespace Blackbox\Epace\Model\Epace;
 
-class SalesTax extends \Blackbox\Epace\Model\Epace\AbstractObject
+class SalesTax extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {
