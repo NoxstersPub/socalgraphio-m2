@@ -1,0 +1,25 @@
+<div class="pp-buttons-container">
+     <button id="<?php echo $block->getId() ?>" onclick="testConnection()">
+        <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+    </button>
+</div>
+
+
+<script type="text/javascript">
+    function testConnection() {
+    	alert('sddd');
+        var in1 = encodeURIComponent(document.getElementById('epace_test_requests_in1').value);
+        var in2 = encodeURIComponent(document.getElementById('epace_test_requests_in2').value);
+		
+		//window.location.replace("https://www.w3schools.com");
+        window.location.replace('<?php echo $this->getUrl('epace/index/index'); ?>' + '?in1=' + in1 + '&in2=' + in2);
+    }
+</script>
+
+ 
+
+
+
+
+
+     

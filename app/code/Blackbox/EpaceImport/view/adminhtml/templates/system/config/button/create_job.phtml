@@ -1,0 +1,33 @@
+ 
+
+<div class="pp-buttons-container">
+    <a href="javascript:void(0)" class="system_config_test create_job" id="<?php echo $block->getId() ?>" > <?php  echo $block->escapeHtml($block->getButtonLabel()); ?></a>
+</div>
+
+<style type="text/css">
+    .system_config_test {
+        border: 1px solid #ccc;
+        background: #ccc;
+        padding: 10px;
+    }
+</style>
+
+
+<script>
+ require(['jquery'], function ($){
+  $("#test_create_job_button").click(function() {
+       var customer = encodeURIComponent(document.getElementById('epace_test_requests_customer').value);
+        var description = encodeURIComponent(document.getElementById('epace_test_requests_description').value);
+        $('#test_create_job_button').attr('href','<?php echo $this->getUrl('epace/index/testCreateJob', array('_current'=>true))?>' + '?customer=' + customer + '&description=' + description);
+
+   })
+  });
+</script>
+
+
+ 
+
+
+
+
+

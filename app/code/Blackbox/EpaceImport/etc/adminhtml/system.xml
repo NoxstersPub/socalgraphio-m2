@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="blackbox" translate="label" sortOrder="10">
+            <label>Blackbox</label>
+        </tab>
+        <section id="epace" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Epace</label>
+            <tab>blackbox</tab>
+            <resource>Blackbox_EpaceImport::epaceimport_config</resource>
+				<group id="main_settings" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="0" showInStore="0">
+						<label>Main Setting</label>
+						<field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Enable</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="base_url" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Base url</label>
+						 </field>
+						 <field id="username" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Username</label>
+						 </field>
+						 <field id="password" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Password</label>
+						 </field>
+						 <field id="company" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Company</label>
+						 </field>
+						 <field id="sales_person" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Sales Person</label>
+						 </field>
+						 <field id="default_customer_id" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Default Customer Id</label>
+						 </field>
+						 <field id="mode" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+							<label>Mode</label>
+							<source_model>Blackbox\EpaceImport\Model\Config\Source\EpaceMode</source_model>
+						</field>
+				</group>
+				<group id="test_requests" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0">
+						<label>Test requests</label>
+						<field id="heading_test_connection" translate="label" type="label" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Test Connection (findObjects)</label>
+						 </field>
+						<field id="in1" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>In1</label>
+						 </field>
+						 <field id="in2" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>in2</label>
+						 </field>
+						 <field id="test_connection" translate="label" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+							<label>Test Connection</label>
+							<frontend_model>Blackbox\EpaceImport\Block\System\Config\Form\Button</frontend_model>
+						</field>
+						<field id="heading_create_job" translate="label" type="label" sortOrder="4"  showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Test Create Job</label>
+						 </field>
+						 <field id="customer" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Order #</label>
+						 </field>
+						 <field id="description" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Description</label>
+						 </field>
+						 <field id="test_create_job" translate="label" type="button" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+							<label>Create Job</label>
+							 <frontend_model>Blackbox\EpaceImport\Block\System\Config\Form\Button\CreateJob</frontend_model> 
+						</field>
+						<field id="heading_create_employee_time" translate="label" type="label" sortOrder="8"  showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Test Create Employee TIme</label>
+						 </field>
+						 <field id="employee" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Employee</label>
+						 </field>
+						 <field id="start_date" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Start Date</label>
+						 </field>
+						 <field id="start_time" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Start Time</label>
+						 </field>
+						 <field id="stop_date" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Stop Date</label>
+						 </field>
+						 <field id="stop_time" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Stop Time</label>
+						 </field>
+						  <field id="test_create_employee_time" translate="label" type="button" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+							<label>Create Employee Time</label>
+							 <frontend_model>Blackbox\EpaceImport\Block\System\Config\Form\Button\CreateEmployeeTime</frontend_model> 
+						</field>
+						 
+				</group>
+				<group id="import" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+						<label>Import</label>
+						<field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Enable</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="last_update_time" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Last Update Time</label>
+						 </field>
+						 <field id="last_import_new_time" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Last Import New Time</label>
+						 </field>
+						 <field id="update_estimates" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Update Estimates</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="update_jobs" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Update Jobs</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="update_closed_jobs" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Update Closed Jobs</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="update_receivables" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Update Receivables</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="update_invoices" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Update Invoices</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="update_shipments" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Update Shipments</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="update_purchase_orders" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Update Purchase Orders</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="import_new" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Import New Objects</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="log" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Enable log</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+					</group>
+					<group id="mongodb_setting" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>MongoDB Settings</label>
+						<field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Enable</label>
+							<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						</field>
+						<field id="host" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Host</label>
+						 </field>
+						 <field id="database" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+							<label>Database</label>
+						 </field>
+					</group>	
+		</section>
+    </system>
+</config>

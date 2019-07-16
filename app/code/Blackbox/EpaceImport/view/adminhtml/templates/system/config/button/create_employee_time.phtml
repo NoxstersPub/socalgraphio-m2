@@ -1,0 +1,47 @@
+<div class="pp-buttons-container">
+    <a href="javascript:void(0)" class="system_config_test create_employee_time" id="<?php echo $block->getId() ?>" > <?php  echo $block->escapeHtml($block->getButtonLabel()); ?></a>
+</div>
+
+<style type="text/css">
+    .system_config_test {
+        border: 1px solid #ccc;
+        background: #ccc;
+        padding: 10px;
+    }
+</style>
+
+<script type="text/javascript">
+  /*  function createEmployeeTime() {
+        var employee = encodeURIComponent(document.getElementById('epace_test_requests_employee').value);
+        var startDate = encodeURIComponent(document.getElementById('epace_test_requests_start_date').value);
+        var startTime = encodeURIComponent(document.getElementById('epace_test_requests_start_time').value);
+        var stopDate = encodeURIComponent(document.getElementById('epace_test_requests_stop_date').value);
+        var stopTime = encodeURIComponent(document.getElementById('epace_test_requests_stop_time').value);
+        setLocation('<? // =$this->getUrl('epace/index/testCreateEmployeeTime', array('_current'=>true))?>' +
+            '?employee=' + employee +
+            '&startDate=' + startDate +
+            '&startTime=' + startTime +
+            '&stopDate=' + stopDate +
+            '&stopTime=' + stopTime
+        );
+    } */
+</script>
+<script>
+ require(['jquery'], function ($){
+  $("#epace_create_employee_time_button").click(function() {
+        var employee = encodeURIComponent(document.getElementById('epace_test_requests_employee').value);
+        var startDate = encodeURIComponent(document.getElementById('epace_test_requests_start_date').value);
+        var startTime = encodeURIComponent(document.getElementById('epace_test_requests_start_time').value);
+        var stopDate = encodeURIComponent(document.getElementById('epace_test_requests_stop_date').value);
+        var stopTime = encodeURIComponent(document.getElementById('epace_test_requests_stop_time').value);
+        $('#epace_create_employee_time_button').attr('href','<?php echo $this->getUrl('epace/index/TestCreateEmployeeTime', array('_current'=>true))?>' + 
+            '?employee=' + employee +
+            '&startDate=' + startDate +
+            '&startTime=' + startTime +
+            '&stopDate=' + stopDate +
+            '&stopTime=' + stopTime
+            );
+
+   })
+  });
+</script>
