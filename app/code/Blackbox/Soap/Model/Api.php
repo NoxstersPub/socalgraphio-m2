@@ -115,7 +115,7 @@ class Api extends \Magento\Framework\Model\AbstractModel
         if($error = curl_error($ch)) {
             $this->logResponse($requestInfo, $error, $action, $url, $_headers);
             curl_close($ch);
-            throw new \Blackbox_Soap_Model_Exception($error);
+            throw new \Blackbox\Soap\Model\Exception($error);
         }
 
         curl_close($ch);

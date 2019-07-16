@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_Prepress_Item[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Prepress_Item_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_Prepress_Item_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Prepress\Item;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/prepress_item');
+        $this->_init('Blackbox\Epace\Model\Epace\Prepress\Item');
     }
 }

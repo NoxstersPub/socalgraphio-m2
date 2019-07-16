@@ -1,14 +1,10 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_Estimate_Quantity[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Estimate_Quantity_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_Estimate_Quantity_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Estimate\Quantity;
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/estimate_quantity');
+        $this->_init('Blackbox\Epace\Model\Epace\Estimate\Quantity');
     }
 }

@@ -121,7 +121,8 @@ class Invoice extends \Blackbox\Epace\Model\Epace\Job\Part\AbstractChild
 
     /**
      * @return \Blackbox\Epace\Model\Epace\Invoice_SalesDist[]
-     */
+     {
+       
     public function getSalesDists()
     {
         return $this->_getInvoiceChildren('efi/invoice_salesDist_collection');

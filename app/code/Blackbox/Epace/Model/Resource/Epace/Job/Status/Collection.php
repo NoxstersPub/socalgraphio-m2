@@ -1,15 +1,12 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_Job_Status[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Job_Status_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_Job_Status_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Job\Status;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/job_status');
+        $this->_init('Blackbox\Epace\Model\Epace\Job\Status');
     }
 
     public function toOptionArray()

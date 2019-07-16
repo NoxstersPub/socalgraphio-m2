@@ -1,15 +1,12 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_Invoice_Extra_Type[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Invoice_Extra_Type_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_Invoice_Extra_Type_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Invoice\Extra\Type;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/invoice_extra_type');
+        $this->_init('Blackbox\Epace\Model\Epace\Invoice\Extra\Type');
     }
 
     public function toOptionArray()

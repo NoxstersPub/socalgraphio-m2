@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_Job_Part_SizeAllowance[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Job_Part_SizeAllowance_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_Job_Part_SizeAllowance_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Job\Part\SizeAllowance;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/job_part_sizeAllowance');
+        $this->_init('Blackbox\Epace\Model\Epace\Job\Part\SizeAllowance');
     }
 }

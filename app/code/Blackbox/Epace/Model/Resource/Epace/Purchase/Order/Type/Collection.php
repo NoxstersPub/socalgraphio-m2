@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @method Blackbox_Epace_Model_Epace_Purchase_Order_Type[] getItems()
- *
- * Class Blackbox_Epace_Model_Resource_Epace_Purchase_Order_Type_Collection
- */
-class Blackbox_Epace_Model_Resource_Epace_Purchase_Order_Type_Collection extends Blackbox_Epace_Model_Resource_Epace_Collection
+namespace Blackbox\Epace\Model\Resource\Epace\Purchase\Order\Type;
+
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Collection
 {
     protected function _construct()
     {
-        $this->_init('efi/purchase_order_type');
+        $this->_init('Blackbox\Epace\Model\Epace\Purchase\Order\Type');
     }
 }
