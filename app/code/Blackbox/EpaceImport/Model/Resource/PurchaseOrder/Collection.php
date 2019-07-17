@@ -1,13 +1,14 @@
 <?php
+namespace Blackbox_EpaceImport_Model_Resource_PurchaseOrder;
 
 /**
  * Flat sales order collection
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection extends Mage_Sales_Model_Resource_Collection_Abstract
+class Collection extends \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
 {
     /**
      * Event prefix
@@ -37,7 +38,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection extends Mage_
     /**
      * Add items count expr to collection select, backward capability with eav structure
      *
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection
      */
     public function addItemCountExpr()
     {
@@ -69,7 +70,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection extends Mage_
      *
      * @param int $limit
      * @param int $offset
-     * @return Mage_Eav_Model_Entity_Collection_Abstract
+     * @return \Mage\Eav\Model\Entity\Collection\Abstract
      */
     protected function _getAllIdsSelect($limit = null, $offset = null)
     {
@@ -82,7 +83,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection extends Mage_
      * Join table sales_flat_order_address to select for billing and shipping order addresses.
      * Create corillation map
      *
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderCollection
      */
     protected function _addAddressFields()
     {
@@ -110,14 +111,14 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection extends Mage_
                     $shippingAliasName . '.postcode'
                 )
             );
-        Mage::getResourceHelper('core')->prepareColumnsList($this->getSelect());
+//        Mage::getResourceHelper('core')->prepareColumnsList($this->getSelect());
         return $this;
     }
 
     /**
      * Add addresses information to select
      *
-     * @return Blackbox_EpaceImport_Model_Resource_Collection_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\Collection\AbstractCollection
      */
     public function addAddressFields()
     {
@@ -131,7 +132,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection extends Mage_
      *
      * @param string $field
      * @param null|string|array $condition
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderCollection
      */
     public function addFieldToSearchFilter($field, $condition = null)
     {
@@ -145,7 +146,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection extends Mage_
      *
      * @param array $attributes
      * @param array|integer|string|null $condition
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderCollection
      */
     public function addAttributeToSearchFilter($attributes, $condition = null)
     {

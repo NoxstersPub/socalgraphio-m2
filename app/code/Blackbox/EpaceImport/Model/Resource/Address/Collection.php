@@ -1,9 +1,8 @@
 <?php
 
-/**
- * Flat purchase order payment collection
- */
-class Blackbox_EpaceImport_Model_Resource_Address_Collection extends Mage_Sales_Model_Resource_Order_Collection_Abstract
+namespace Blackbox\EpaceImport\Model\Resource\Address;
+
+class Collection extends \Magento\Sales\Model\ResourceModel\Order\Collection\AbstractCollection
 {
     /**
      * Event prefix
@@ -36,8 +35,10 @@ class Blackbox_EpaceImport_Model_Resource_Address_Collection extends Mage_Sales_
     protected function _afterLoad()
     {
         parent::_afterLoad();
-
-        Mage::dispatchEvent($this->_eventPrefix . '_load_after', array(
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+	/** @var \Magento\Framework\Event\ManagerInterface $manager */
+	$manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+	$manager->dispatch($this->_eventPrefix . '_load_after', array(
             $this->_eventObject => $this
         ));
 

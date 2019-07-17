@@ -1,6 +1,7 @@
 <?php
 
 namespace Blackbox\EpaceImport\Model\Resource\Estimate\Collection;
+
 abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Order\Collection\AbstractCollection
 {
     /**
@@ -27,7 +28,8 @@ abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Order
     {
         $this->_estimate = $estimate;
         if ($this->_eventPrefix && $this->_eventObject) {
-            Mage::dispatchEvent($this->_eventPrefix . '_set_estimate', array(
+            $manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_set_estimate', array(
                 'collection' => $this,
                 $this->_eventObject => $this,
                 'estimate' => $estimate

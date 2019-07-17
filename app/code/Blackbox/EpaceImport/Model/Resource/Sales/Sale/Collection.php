@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_EpaceImport_Model_Resource_Sales_Sale_Collection extends Mage_Sales_Model_Resource_Sale_Collection
+namespace Blackbox\EpaceImport\Model\Resource\Sales\Sale;
+
+class Collection extends \Magento\Sales\Model\ResourceModel\Sale\Collection
 {
     /**
      * Customer model
@@ -22,7 +24,7 @@ class Blackbox_EpaceImport_Model_Resource_Sales_Sale_Collection extends Mage_Sal
      * @param Mage_Customer_Model_Customer $customer
      * @return $this
      */
-    public function setSalesPersonFilter(Mage_Customer_Model_Customer $customer)
+    public function setSalesPersonFilter(\Magento\Customer\Model\Customer $customer)
     {
         $this->_salesPerson = $customer;
         return $this;
@@ -34,7 +36,7 @@ class Blackbox_EpaceImport_Model_Resource_Sales_Sale_Collection extends Mage_Sal
      * @param Mage_Customer_Model_Customer $customer
      * @return $this
      */
-    public function setCSRFilter(Mage_CUstomer_Model_Customer $customer)
+    public function setCSRFilter(\Magento\Customer\Model\Customer $customer)
     {
         $this->_csr = $customer;
         return $this;
@@ -47,9 +49,10 @@ class Blackbox_EpaceImport_Model_Resource_Sales_Sale_Collection extends Mage_Sal
      */
     protected function _beforeLoad()
     {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $this->getSelect()
             ->from(
-                array('sales' => Mage::getResourceSingleton('sales/order')->getMainTable()),
+                array('sales' => $objectManager->create('Magento\Sales\Model\ResourceModel\Order\Collection')->getMainTable()),
                 array(
                     'store_id',
                     'lifetime'      => new Zend_Db_Expr('SUM(sales.base_grand_total)'),
@@ -64,15 +67,15 @@ class Blackbox_EpaceImport_Model_Resource_Sales_Sale_Collection extends Mage_Sal
         $filterField = [];
         $filterValue = [];
 
-        if ($this->_customer instanceof Mage_Customer_Model_Customer) {
+        if ($this->_customer instanceof \Magento\Customer\Model\Customer) {
             $filterField[] = 'sales.customer_id';
             $filterValue[] = $this->_customer->getId();
         }
-        if ($this->_salesPerson instanceof Mage_Customer_Model_Customer) {
+        if ($this->_salesPerson instanceof \Magento\Customer\Model\Customer) {
             $filterField[] = 'sales.sales_person_id';
             $filterValue[] = $this->_salesPerson->getId();
         }
-        if ($this->_csr instanceof Mage_Customer_Model_Customer) {
+        if ($this->_csr instanceof \Magento\Customer\Model\Customer) {
             $filterField[] = 'sales.csr_id';
             $filterValue[] = $this->_csr->getId();
         }
@@ -101,7 +104,8 @@ class Blackbox_EpaceImport_Model_Resource_Sales_Sale_Collection extends Mage_Sal
             $this->addFieldToFilter('state', array($condition => $this->_orderStateValue));
         }
 
-        Mage::dispatchEvent('sales_sale_collection_query_before', array('collection' => $this));
+        $objectManager->get('Magento\Framework\Event\ManagerInterface')
+                ->dispatch('sales_sale_collection_query_before', array('collection' => $this));
         return $this;
     }
 }

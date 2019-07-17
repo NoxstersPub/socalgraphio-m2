@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_EpaceImport_Model_Usa_Shipping_Carrier_Ups extends Mage_Usa_Model_Shipping_Carrier_Ups
+namespace Blackbox\EpaceImport\Model\Usa\Shipping\Carrier;
+
+class Ups extends \Magento\Ups\Model\Carrier
 {
     /**
      * Prepare shipping rate result based on response
@@ -26,8 +28,10 @@ class Blackbox_EpaceImport_Model_Usa_Shipping_Carrier_Ups extends Mage_Usa_Model
                 $negotiatedActive = $this->getConfigFlag('negotiated_active')
                     && $this->getConfigData('shipper_number')
                     && !empty($negotiatedArr);
-
-                $allowedCurrencies = Mage::getModel('directory/currency')->getConfigAllowCurrencies();
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $helper = $objectManager->get('Magento\Directory\Helper\Data');
+                $allowedCurrencies = $objectManger->create('Magento\Directory\Model\Currency')
+                                        ->getConfigAllowCurrencies();
 
                 foreach ($arr as $shipElement){
                     $code = (string)$shipElement->Service->Code;
@@ -46,7 +50,7 @@ class Blackbox_EpaceImport_Model_Usa_Shipping_Carrier_Ups extends Mage_Usa_Model
                             if (in_array($responseCurrencyCode, $allowedCurrencies)) {
                                 $cost = (float) $cost * $this->_getBaseCurrencyRate($responseCurrencyCode);
                             } else {
-                                $errorTitle = Mage::helper('directory')->__('Can\'t convert rate from "%s-%s".', $responseCurrencyCode, $this->_request->getPackageCurrency()->getCode());
+                                $errorTitle = $helper->__('Can\'t convert rate from "%s-%s".', $responseCurrencyCode, $this->_request->getPackageCurrency()->getCode());
                                 $error = Mage::getModel('shipping/rate_result_error');
                                 $error->setCarrier('ups');
                                 $error->setCarrierTitle($this->getConfigData('title'));

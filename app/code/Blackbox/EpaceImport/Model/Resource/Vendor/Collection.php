@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_EpaceImport_Model_Resource_Vendor_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+namespace Blackbox\EpaceImport\Model\Resource\Vendor;
+
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection
 {
     protected function _construct()
     {

@@ -1,7 +1,9 @@
 <?php
 
-class Blackbox_EpaceImport_Model_Shipping_Carrier extends Mage_Shipping_Model_Carrier_Abstract
-    implements Mage_Shipping_Model_Carrier_Interface
+namespace Blackbox\EpaceImport\Model\Shipping;
+
+class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier
+    implements \Magento\Shipping\Model\Carrier\CarrierInterface
 {
     protected $_code = 'epace_shipping';
 
@@ -11,32 +13,34 @@ class Blackbox_EpaceImport_Model_Shipping_Carrier extends Mage_Shipping_Model_Ca
 
     public function getAllowedMethods()
     {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $storeManager = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface');
+        $helper = $objectManager->create('Blackbox\EpaceImport\Helper\EpaceImport');
         if (is_null($this->allowedMethods)) {
             $this->allowedMethods = [
                 'empty' => 'Empty'
             ];
 
             try {
-                $cache = Mage::getStoreConfig(self::STORE_CONFIG_EPACE_SHIPPING_CACHE_KEY);
+                $cache = $storeManager->getValue(self::STORE_CONFIG_EPACE_SHIPPING_CACHE_KEY);
                 if ($cache) {
                     $cache = json_decode($cache, true);
                 }
 
                 /** @var Blackbox_EpaceImport_Helper_Data $helper */
-                $helper = Mage::helper('epacei');
 
                 if ($cache && $cache['timestamp'] && time() - $cache['timestamp'] < 86400 && !empty($cache['allowedMethods'])) {
                     $this->allowedMethods = $cache['allowedMethods'];
                 } else {
                     /** @var Blackbox_Epace_Model_Resource_Epace_Ship_Provider_Collection $collection */
-                    $collection = Mage::getResourceModel('efi/ship_provider_collection');
+                    $collection = $storeManager->create('Blackbox\Epace\Model\Resource\Epace\Ship\Provider\Collection');
                     foreach ($collection->getItems() as $provider) {
                         foreach ($provider->getShipVias() as $shipVia) {
                             $this->allowedMethods[$helper->getShipViaMethodCode($shipVia)] = $provider->getName() . ' - ' . $shipVia->getDescription();
                         }
                     }
 
-                    Mage::getConfig()->saveConfig(self::STORE_CONFIG_EPACE_SHIPPING_CACHE_KEY, json_encode([
+                    $storeManager->saveConfig(self::STORE_CONFIG_EPACE_SHIPPING_CACHE_KEY, json_encode([
                         'timestamp' => time(),
                         'allowedMethods' => $this->allowedMethods
                     ]));
@@ -51,14 +55,16 @@ class Blackbox_EpaceImport_Model_Shipping_Carrier extends Mage_Shipping_Model_Ca
 
     public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        
+        $helper = $objectManager->create('Blackbox\EpaceImport\Helper\EpaceImport');
+        
         /** @var Mage_Shipping_Model_Rate_Result $result */
-        $result = Mage::getModel('shipping/rate_result');
-
+        $result = $objectManager->create('Magento\Shipping\Model\Rate\Result');
         foreach ($this->getAllowedMethods() as $method => $label)
         {
             /** @var Mage_Shipping_Model_Rate_Result_Method $rate */
-            $rate = Mage::getModel('shipping/rate_result_method');
-
+            $rate = $objectManager->create('\Magento\Quote\Model\Quote\Address\Rate');
             $rate->setCarrier($this->_code);
             $rate->setCarrierTitle($this->getConfigData('title'));
             $rate->setMethod($method);
@@ -77,7 +83,9 @@ class Blackbox_EpaceImport_Model_Shipping_Carrier extends Mage_Shipping_Model_Ca
      */
     public function getEmptyRate()
     {
-        $rate = Mage::getModel('shipping/rate_result_method');
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        
+        $rate = $objectManager->create('\Magento\Quote\Model\Quote\Address\Rate');
         $rate->setCarrier($this->_code);
         $rate->setCarrierTitle($this->getConfigData('title'));
         $rate->setMethod('empty');

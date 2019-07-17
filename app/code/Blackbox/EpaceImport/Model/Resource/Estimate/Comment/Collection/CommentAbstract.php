@@ -1,7 +1,8 @@
 <?php
 
 namespace Blackbox\EpaceImport\Model\Resource\Estimate\Comment\Collection;
-abstract class CommentAbstract  extends Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
+
+abstract class CommentAbstract  extends \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
 {
     /**
      * Set filter on comments by their parent item

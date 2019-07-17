@@ -1,13 +1,14 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\Estimate\Grid;
 
 /**
  * Flat sales order grid collection
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_Estimate_Grid_Collection extends Blackbox_EpaceImport_Model_Resource_Estimate_Collection
+class Collection extends \Blackbox\EpaceImport\Model\Resource\Estimate\Collection
 {
     /**
      * Event prefix
@@ -70,7 +71,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Grid_Collection extends Black
      * Set customer mode flag value
      *
      * @param bool $value
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Grid_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Grid\Collection
      */
     public function setIsCustomerMode($value)
     {

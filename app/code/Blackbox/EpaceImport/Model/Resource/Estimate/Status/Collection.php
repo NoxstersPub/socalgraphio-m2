@@ -1,18 +1,20 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\Estimate\Status;
+
 /**
  * Flat sales order status history collection
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_Estimate_Status_Collection extends Blackbox_Epace_Model_Resource_Epace_Estimate_Status_Collection
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\Estimate\Status\Collection
 {
     /**
      * Define label order
      *
      * @param string $dir
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Status_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Status\Collection
      */
     public function orderByLabel($dir = 'ASC')
     {

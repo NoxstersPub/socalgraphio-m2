@@ -1,13 +1,14 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\Estimate\Item;
 
 /**
  * Flat sales estimate payment collection
  *
  * @category    Mage
- * @package     Mage_Sales
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Mage\Sales
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection extends Blackbox_EpaceImport_Model_Resource_Estimate_Collection_Abstract
+class Collection extends \Blackbox\EpaceImport\Model\Resource\Estimate\Collection\EstimateAbstract
 {
     /**
      * Event prefix
@@ -42,7 +43,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection extends Black
     /**
      * Assign parent items on after collection load
      *
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Item\Collection
      */
     protected function _afterLoad()
     {
@@ -61,7 +62,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection extends Black
     /**
      * Set random items estimate
      *
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Item\Collection
      */
     public function setRandomEstimate()
     {
@@ -73,13 +74,13 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection extends Black
      * Set filter by item id
      *
      * @param mixed $item
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Item\Collection
      */
     public function addIdFilter($item)
     {
         if (is_array($item)) {
             $this->addFieldToFilter('item_id', array('in'=>$item));
-        } elseif ($item instanceof Mage_Sales_Model_Estimate_Item) {
+        } elseif ($item instanceof \Magento\Sales\Model\Estimate\Item) {
             $this->addFieldToFilter('item_id', $item->getId());
         } else {
             $this->addFieldToFilter('item_id', $item);
@@ -91,7 +92,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection extends Black
      * Filter collection by specified product types
      *
      * @param array $typeIds
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Item\Collection
      */
     public function filterByTypes($typeIds)
     {
@@ -103,7 +104,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection extends Black
      * Filter collection by parent_item_id
      *
      * @param int $parentId
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Item\Collection
      */
     public function filterByParent($parentId = null)
     {
@@ -119,7 +120,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection extends Black
      * Filter by customerId
      *
      * @param int|array $customerId
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Item\Collection
      */
     public function addFilterByCustomerId($customerId)
     {

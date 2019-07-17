@@ -1,13 +1,13 @@
 <?php
-
+namespace Blackbox\EpaceImport\Model\Resource\Estimate;
 /**
  * Flat sales order collection
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales_Model_Resource_Collection_Abstract
+class Collection extends \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
 {
     /**
      * Event prefix
@@ -39,7 +39,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
     /**
      * Add items count expr to collection select, backward capability with eav structure
      *
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Collection
+     * @return \Blackbox\EpaceImport\Model\ResourceModel\Estimate\Collection
      */
     public function addItemCountExpr()
     {
@@ -71,7 +71,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
      *
      * @param int $limit
      * @param int $offset
-     * @return Mage_Eav_Model_Entity_Collection_Abstract
+     * @return \Mage\Eav\Model\Entity\Collection\AbstractCollection
      */
     protected function _getAllIdsSelect($limit = null, $offset = null)
     {
@@ -84,7 +84,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
      * Join table sales_flat_order_address to select for billing and shipping order addresses.
      * Create corillation map
      *
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Collection
+     * @return \Blackbox\EpaceImport\Model\ResourceModel\Estimate\Collection
      */
     protected function _addAddressFields()
     {
@@ -131,14 +131,15 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
                     $shippingAliasName . '.postcode'
                 )
             );
-        Mage::getResourceHelper('core')->prepareColumnsList($this->getSelect());
+//                    follow up required.
+//        Mage::getResourceHelper('core')->prepareColumnsList($this->getSelect());
         return $this;
     }
 
     /**
      * Add addresses information to select
      *
-     * @return Blackbox_EpaceImport_Model_Resource_Collection_Abstract
+     * @return \Blackbox\EpaceImport\Model\ResourceModel\Collection\AbstractCollection
      */
     public function addAddressFields()
     {
@@ -152,7 +153,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
      *
      * @param string $field
      * @param null|string|array $condition
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Collection
+     * @return \Blackbox\EpaceImport\Model\ResourceModel\Estimate\Collection
      */
     public function addFieldToSearchFilter($field, $condition = null)
     {
@@ -166,7 +167,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
      *
      * @param array $attributes
      * @param array|integer|string|null $condition
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Collection
+     * @return \Blackbox\EpaceImport\Model\ResourceModel\Estimate\Collection
      */
     public function addAttributeToSearchFilter($attributes, $condition = null)
     {
@@ -188,7 +189,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
      * Add filter by specified billing agreements
      *
      * @param int|array $agreements
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Collection
+     * @return \Blackbox\EpaceImport\Model\ResourceModel\Estimate\Collection
      */
     public function addBillingAgreementsFilter($agreements)
     {
@@ -206,7 +207,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Collection extends Mage_Sales
      * Add filter by specified recurring profile id(s)
      *
      * @param array|int $ids
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Collection
+     * @return \Blackbox\EpaceImport\Model\ResourceModel\Estimate\Collection
      */
     public function addRecurringProfilesFilter($ids)
     {

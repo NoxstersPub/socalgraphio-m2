@@ -1,6 +1,6 @@
 <?php
-
 namespace Blackbox\EpaceImport\Model\Resource\Estimate;
+
 abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\EntityAbstract
 {
     /**
@@ -73,9 +73,8 @@ abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Entit
         $table = $this->getTable($table);
 
         if (!in_array($alias, $this->getGridColumns())) {
-            Mage::throwException(
-                Mage::helper('sales')->__('Please specify a valid grid column alias name that exists in grid table.')
-            );
+            $errorMsg = 'Please specify a valid grid column alias name that exists in grid table.';
+            throw new \Exception($errorMsg);
         }
 
         $this->_virtualGridColumns[$alias] = array(
@@ -108,7 +107,10 @@ abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Entit
     {
         $this->_virtualGridColumns = array();
         if ($this->_eventPrefix && $this->_eventObject) {
-            Mage::dispatchEvent($this->_eventPrefix . '_init_virtual_grid_columns', array(
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_init_virtual_grid_columns', array(
                 $this->_eventObject => $this
             ));
         }
@@ -133,7 +135,10 @@ abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Entit
                 $proxy->setIds($ids)
                     ->setData($this->_eventObject, $this);
 
-                Mage::dispatchEvent($this->_eventPrefix . '_update_grid_records', array('proxy' => $proxy));
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+                /** @var \Magento\Framework\Event\ManagerInterface $manager */
+                $manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+                $manager->dispatch($this->_eventPrefix . '_update_grid_records', array('proxy' => $proxy));
                 $ids = $proxy->getIds();
             }
 
@@ -261,7 +266,10 @@ abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Entit
     protected function _beforeSaveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
         if ($this->_eventObject && $this->_eventPrefix) {
-            Mage::dispatchEvent($this->_eventPrefix . '_save_attribute_before', array(
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+                /** @var \Magento\Framework\Event\ManagerInterface $manager */
+                $manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+                $manager->dispatch($this->_eventPrefix . '_save_attribute_before', array(
                 $this->_eventObject => $this,
                 'object' => $object,
                 'attribute' => $attribute
@@ -280,7 +288,10 @@ abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Entit
     protected function _afterSaveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
         if ($this->_eventObject && $this->_eventPrefix) {
-            Mage::dispatchEvent($this->_eventPrefix . '_save_attribute_after', array(
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_save_attribute_after', array(
                 $this->_eventObject => $this,
                 'object' => $object,
                 'attribute' => $attribute
@@ -343,7 +354,10 @@ abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Entit
     {
         if ($this->_useIncrementId && !$object->getIncrementId()) {
             /* @var $entityType Mage_Eav_Model_Entity_Type */
-            $entityType = Mage::getModel('eav/entity_type')->loadByCode($this->_entityTypeForIncrementId);
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+	
+            $entityType = $objectManager->get('Magento\Eav\Model\Entity\Type')->loadByCode($this->_entityTypeForIncrementId);
             $object->setIncrementId($entityType->fetchNewIncrementId($object->getStoreId()));
         }
         parent::_beforeSave($object);

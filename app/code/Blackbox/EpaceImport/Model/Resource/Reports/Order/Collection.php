@@ -1,20 +1,25 @@
 <?php
 
-class Blackbox_EpaceImport_Model_resource_Reports_Order_Collection extends Blackbox_CinemaCloud_Model_Resource_Reports_Order_Collection
+namespace Blackbox\EpaceImport\Model\Resource\Reports\Order;
+
+class Collection //extends Blackbox_CinemaCloud_Model_Resource_Reports_Order_Collection
 {
     protected $categories = false;
 
     public function calculateMonthlySales($isFilter = 0)
     {
-        $statuses = Mage::getSingleton('sales/config')
-            ->getOrderStatusesForState(Mage_Sales_Model_Order::STATE_CANCELED);
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+	/** @var \Magento\Framework\Event\ManagerInterface $manager */
+	$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+        $statuses = $objectManager->get('Magento\Sales\Model\Config')
+            ->getOrderStatusesForState(\Magento\Sales\Model\Order::STATE_CANCELED);
 
         if (empty($statuses)) {
             $statuses = array(0);
         }
         $adapter = $this->getConnection();
-
-        if (Mage::getStoreConfig('sales/dashboard/use_aggregated_data')) {
+        $useAggregated = $this->scopeConfig->getValue('sales/dashboard/use_aggregated_data', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        if ($useAggregated) {
             $this->setMainTable('sales/order_aggregated_created');
             $this->removeAllFieldsFromSelect();
             $averageExpr = $adapter->getCheckSql(
@@ -28,7 +33,7 @@ class Blackbox_EpaceImport_Model_resource_Reports_Order_Collection extends Black
 
             if (!$isFilter) {
                 $this->addFieldToFilter('store_id',
-                    array('eq' => Mage::app()->getStore(Mage_Core_Model_Store::ADMIN_CODE)->getId())
+                    array('eq' => $storeManager->getStore()->getId())
                 );
             }
             $this->getSelect()->where('main_table.order_status NOT IN(?)', $statuses)
@@ -149,7 +154,9 @@ class Blackbox_EpaceImport_Model_resource_Reports_Order_Collection extends Black
 
     protected function _getCategoryExpression()
     {
-        $types = Mage::helper('epacei')->getJobTypes();
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+        $helper = $objectManager->get('Blackbox\EpaceImport\Helper\EpaceImport');
+        $types = $helper->getJobTypes();
 
         $sql = 'case';
         foreach ($types as $id => $name) {

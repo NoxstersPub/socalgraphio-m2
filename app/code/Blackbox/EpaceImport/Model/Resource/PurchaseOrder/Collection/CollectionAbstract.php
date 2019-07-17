@@ -1,5 +1,4 @@
 <?php
-
 namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection;
 
 abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
@@ -7,7 +6,7 @@ abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Col
     /**
      * PurchaseOrder object
      *
-     * @var Blackbox_EpaceImport_Model_PurchaseOrder
+     * @var \Blackbox\EpaceImport\Model\PurchaseOrder
      */
     protected $_purchaseOrder   = null;
 
@@ -21,8 +20,8 @@ abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Col
     /**
      * Set sales purchase order model as parent collection object
      *
-     * @param Blackbox_EpaceImport_Model_PurchaseOrder $purchaseOrder
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abstract
+     * @param \Blackbox\EpaceImport\Model\PurchaseOrder $purchaseOrder
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\Abstract
      */
     public function setPurchaseOrder($purchaseOrder)
     {
@@ -44,7 +43,7 @@ abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Col
     /**
      * Retrieve sales purchase order as parent collection object
      *
-     * @return Blackbox_EpaceImport_Model_PurchaseOrder|null
+     * @return \Blackbox\EpaceImport\Model\PurchaseOrder|null
      */
     public function getPurchaseOrder()
     {
@@ -55,7 +54,7 @@ abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Col
      * Add purchase order filter
      *
      * @param int|Blackbox_EpaceImport_Model_PurchaseOrder $purchaseOrder
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\Abstract
      */
     public function setPurchaseOrderFilter($purchaseOrder)
     {
