@@ -1,9 +1,8 @@
 <?php
 
-/**
- * Flat purchase order address resource
- */
-class Blackbox_EpaceImport_Model_Resource_Address extends Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+namespace Blackbox\EpaceImport\Model\Resource;
+
+class Address extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
 {
     /**
      * Event prefix
@@ -29,17 +28,17 @@ class Blackbox_EpaceImport_Model_Resource_Address extends Blackbox_EpaceImport_M
     public function getAllAttributes()
     {
         $attributes = array(
-            'city'       => Mage::helper('sales')->__('City'),
-            'company'    => Mage::helper('sales')->__('Company'),
-            'country_id' => Mage::helper('sales')->__('Country'),
-            'email'      => Mage::helper('sales')->__('Email'),
-            'firstname'  => Mage::helper('sales')->__('First Name'),
-            'middlename' => Mage::helper('sales')->__('Middle Name'),
-            'lastname'   => Mage::helper('sales')->__('Last Name'),
-            'region_id'  => Mage::helper('sales')->__('State/Province'),
-            'street'     => Mage::helper('sales')->__('Street Address'),
-            'telephone'  => Mage::helper('sales')->__('Telephone'),
-            'postcode'   => Mage::helper('sales')->__('Zip/Postal Code'),
+            'city'       => 'City',
+            'company'    => 'Company',
+            'country_id' => 'Country',
+            'email'      => 'Email',
+            'firstname'  => 'First Name',
+            'middlename' => 'Middle Name',
+            'lastname'   => 'Last Name',
+            'region_id'  => 'State/Province',
+            'street'     => 'Street Address',
+            'telephone'  => 'Telephone',
+            'postcode'   => 'Zip/Postal Code',
         );
         asort($attributes);
         return $attributes;

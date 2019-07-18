@@ -1,5 +1,4 @@
 <?php
-
 namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Comment\Collection;
 
 abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
@@ -17,7 +16,7 @@ abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Col
      * Adds filter to get only 'visible on front' comments
      *
      * @param int $flag
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Comment_Collection_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Comment\Collection\Abstract
      */
     public function addVisibleOnFrontFilter($flag = 1)
     {
@@ -28,7 +27,7 @@ abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Col
      * Set created_at sort order
      *
      * @param string $direction
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Comment_Collection_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Comment\Collection\Abstract
      */
     public function setCreatedAtOrder($direction = 'desc')
     {

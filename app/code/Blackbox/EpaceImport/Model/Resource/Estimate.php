@@ -1,8 +1,8 @@
 <?php
 
-namespace 
+namespace Blackbox\EpaceImport\Model\Resource;
 
-class Blackbox_EpaceImport_Model_Resource_Estimate extends Mage_Sales_Model_Resource_Order_Abstract
+class Estimate extends \Magento\Sales\Model\ResourceModel\Order\Address
 {
     /**
      * Event prefix

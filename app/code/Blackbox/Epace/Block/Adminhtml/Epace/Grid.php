@@ -1,8 +1,9 @@
 <?php
+
 namespace Blackbox\Epace\Block\Adminhtml\Epace;
 
-class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
-{
+class Grid extends \Magento\Backend\Block\Widget\Grid\Extended {
+
     /**
      * @var \Magento\Framework\Module\Manager
      */
@@ -29,15 +30,15 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Backend\Helper\Data $backendHelper,
-        \Blackbox\Epace\Model\EpaceFactory $EpaceFactory,
-        \Blackbox\Epace\Model\Status $status,
-        \Magento\Framework\Module\Manager $moduleManager,
-        array $data = []
+            \Magento\Backend\Block\Template\Context $context, 
+            \Magento\Backend\Helper\Data $backendHelper, 
+            \Blackbox\Epace\Model\EpaceFactory $EpaceFactory, 
+//            \Blackbox\Epace\Model\Epace\Estimate\Status $status, 
+            \Magento\Framework\Module\Manager $moduleManager, 
+            array $data = []
     ) {
         $this->_epaceFactory = $EpaceFactory;
-        $this->_status = $status;
+//        $this->_status = $status;
         $this->moduleManager = $moduleManager;
         parent::__construct($context, $backendHelper, $data);
     }
@@ -45,8 +46,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @return void
      */
-    protected function _construct()
-    {
+    protected function _construct() {
         parent::_construct();
         $this->setId('postGrid');
         $this->setDefaultSort('id');
@@ -59,8 +59,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @return $this
      */
-    protected function _prepareCollection()
-    {
+    protected function _prepareCollection() {
         $collection = $this->_epaceFactory->create()->getCollection();
         $this->setCollection($collection);
 
@@ -73,110 +72,91 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      * @return $this
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    protected function _prepareColumns()
-    {
+    protected function _prepareColumns() {
         $this->addColumn(
-            'id',
-            [
-                'header' => __('ID'),
-                'type' => 'number',
-                'index' => 'id',
-                'header_css_class' => 'col-id',
-                'column_css_class' => 'col-id'
-            ]
+                'id', [
+            'header' => __('ID'),
+            'type' => 'number',
+            'index' => 'id',
+            'header_css_class' => 'col-id',
+            'column_css_class' => 'col-id'
+                ]
         );
 
 
-		
-				$this->addColumn(
-					'name',
-					[
-						'header' => __('Name'),
-						'index' => 'name',
-						
-						
-					]
-				);
-				
-				$this->addColumn(
-					'processed_time',
-					[
-						'header' => __('Processed Time'),
-						'index' => 'processed_time',
-						'type' => 'datetime'
-						
-					]
-				);
-				
-				$this->addColumn(
-					'status',
-					[
-						'header' => __('Status'),
-						'index' => 'status',
-						'type' => 'options',
-						'options' => ['' => '','Critical' => 'Critical', 'With errors' => 'With errors'],
-						
-						
-					]
-				);
-				
-				$this->addColumn(
-					'host',
-					[
-						'header' => __('Host'),
-						'index' => 'host',
-						
-						
-					]
-				);
-				
-				$this->addColumn(
-					'username',
-					[
-						'header' => __('Username'),
-						'index' => 'username',
-						
-						
-					]
-				);
-				
-				$this->addColumn(
-					'password',
-					[
-						'header' => __('Password'),
-						'index' => 'password',
-						
-						
-					]
-				);
-					
-        //$this->addColumn(
-            //'edit',
-            //[
-                //'header' => __('Edit'),
-                //'type' => 'action',
-                //'getter' => 'getId',
-                //'actions' => [
-                    //[
-                        //'caption' => __('Edit'),
-                        //'url' => [
-                            //'base' => '*/*/edit'
-                        //],
-                        //'field' => 'id'
-                    //]
-                //],
-                //'filter' => false,
-                //'sortable' => false,
-                //'index' => 'stores',
-                //'header_css_class' => 'col-action',
-                //'column_css_class' => 'col-action'
-            //]
-        //);
-		
 
-		
-		   $this->addExportType($this->getUrl('epace/*/exportCsv', ['_current' => true]),__('CSV'));
-		   $this->addExportType($this->getUrl('epace/*/exportExcel', ['_current' => true]),__('Excel XML'));
+        $this->addColumn(
+                'name', [
+            'header' => __('Name'),
+            'index' => 'name',
+                ]
+        );
+
+        $this->addColumn(
+                'processed_time', [
+            'header' => __('Processed Time'),
+            'index' => 'processed_time',
+            'type' => 'datetime'
+                ]
+        );
+
+        $this->addColumn(
+                'status', [
+            'header' => __('Status'),
+            'index' => 'status',
+            'type' => 'options',
+            'options' => ['' => '', 'Critical' => 'Critical', 'With errors' => 'With errors'],
+                ]
+        );
+
+        $this->addColumn(
+                'host', [
+            'header' => __('Host'),
+            'index' => 'host',
+                ]
+        );
+
+        $this->addColumn(
+                'username', [
+            'header' => __('Username'),
+            'index' => 'username',
+                ]
+        );
+
+        $this->addColumn(
+                'password', [
+            'header' => __('Password'),
+            'index' => 'password',
+                ]
+        );
+
+        //$this->addColumn(
+        //'edit',
+        //[
+        //'header' => __('Edit'),
+        //'type' => 'action',
+        //'getter' => 'getId',
+        //'actions' => [
+        //[
+        //'caption' => __('Edit'),
+        //'url' => [
+        //'base' => '*/*/edit'
+        //],
+        //'field' => 'id'
+        //]
+        //],
+        //'filter' => false,
+        //'sortable' => false,
+        //'index' => 'stores',
+        //'header_css_class' => 'col-action',
+        //'column_css_class' => 'col-action'
+        //]
+        //);
+
+
+
+        $this->addExportType($this->getUrl('epace/*/exportCsv', ['_current' => true]), __('CSV'));
+        $this->addExportType($this->getUrl('epace/*/exportExcel', ['_current' => true]), __('Excel XML'));
 
         $block = $this->getLayout()->getBlock('grid.bottom.links');
         if ($block) {
@@ -186,55 +166,49 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         return parent::_prepareColumns();
     }
 
-	
     /**
      * @return $this
      */
-    protected function _prepareMassaction()
-    {
+    protected function _prepareMassaction() {
 
         $this->setMassactionIdField('id');
         //$this->getMassactionBlock()->setTemplate('Blackbox_Epace::epace/grid/massaction_extended.phtml');
         $this->getMassactionBlock()->setFormFieldName('epace');
 
         $this->getMassactionBlock()->addItem(
-            'delete',
-            [
-                'label' => __('Delete'),
-                'url' => $this->getUrl('epace/*/massDelete'),
-                'confirm' => __('Are you sure?')
-            ]
+                'delete', [
+            'label' => __('Delete'),
+            'url' => $this->getUrl('epace/*/massDelete'),
+            'confirm' => __('Are you sure?')
+                ]
         );
 
-        $statuses = $this->_status->getOptionArray();
+//        $statuses = $this->_status->getOptionArray();
 
         $this->getMassactionBlock()->addItem(
-            'status',
-            [
-                'label' => __('Change status'),
-                'url' => $this->getUrl('epace/*/massStatus', ['_current' => true]),
-                'additional' => [
-                    'visibility' => [
-                        'name' => 'status',
-                        'type' => 'select',
-                        'class' => 'required-entry',
-                        'label' => __('Status'),
-                        'values' => $statuses
-                    ]
+                'status', [
+            'label' => __('Change status'),
+            'url' => $this->getUrl('epace/*/massStatus', ['_current' => true]),
+            'additional' => [
+                'visibility' => [
+                    'name' => 'status',
+                    'type' => 'select',
+                    'class' => 'required-entry',
+                    'label' => __('Status'),
+                    'values' => '' //$statuses
                 ]
             ]
+                ]
         );
 
 
         return $this;
     }
-		
 
     /**
      * @return string
      */
-    public function getGridUrl()
-    {
+    public function getGridUrl() {
         return $this->getUrl('epace/*/index', ['_current' => true]);
     }
 
@@ -242,16 +216,11 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      * @param \Blackbox\Epace\Model\epace|\Magento\Framework\Object $row
      * @return string
      */
-    public function getRowUrl($row)
-    {
-		
-        return $this->getUrl(
-            'epace/*/edit',
-            ['id' => $row->getId()]
-        );
-		
-    }
+    public function getRowUrl($row) {
 
-	
+        return $this->getUrl(
+                        'epace/*/edit', ['id' => $row->getId()]
+        );
+    }
 
 }

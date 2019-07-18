@@ -1,11 +1,16 @@
 <?php
 
-class Blackbox_EpaceImport_Model_Resource_Reports_Customer_Collection extends Mage_Customer_Model_Resource_Customer_Collection
+namespace Blackbox\EpaceImport\Model\Resource\Reports\Customer;
+
+class Collection extends \Magento\Customer\Model\ResourceModel\Customer\Collection
 {
     public function calculateSalesRepsMonthlySales($limit = null)
     {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+	/** @var \Magento\Framework\Event\ManagerInterface $manager */
+        $helper = $objectManager->get('Blackbox\EpaceImport\Helper\EpaceImport');
         $this
-            ->addAttributeToFilter('group_id', Mage::helper('epacei')->getWholesaleCustomerGroupId())
+            ->addAttributeToFilter('group_id', $helper->getWholesaleCustomerGroupId())
             ->_addAttributeJoin('firstname', 'left')
             ->_addAttributeJoin('middlename', 'left')
             ->_addAttributeJoin('lastname', 'left');
@@ -17,7 +22,7 @@ class Blackbox_EpaceImport_Model_Resource_Reports_Customer_Collection extends Ma
         ], ' ');
 
         /** @var Mage_Sales_Model_Resource_Order_Collection $orderCollection */
-        $orderCollection = Mage::getResourceModel('sales/order_collection');
+        $orderCollection = $objectManager->get('Magento\Sales\Model\ResourceModel\Order\Collection');
         $select = $orderCollection->getSelect()->reset(Zend_Db_Select::COLUMNS)
             ->columns([
                 'sales_person_id',
@@ -28,7 +33,7 @@ class Blackbox_EpaceImport_Model_Resource_Reports_Customer_Collection extends Ma
             ->group('sales_person_id');
 
         /** @var Blackbox_EpaceImport_Model_Resource_Estimate_Collection $estimateCollection */
-        $estimateCollection = Mage::getResourceModel('epacei/estimate_collection');
+        $estimateCollection = $objectManager->get('Blackbox\EpaceImport\Model\Resource\Estimate\Collection');
         $select = $estimateCollection->getSelect()->reset(Zend_Db_Select::COLUMNS)
             ->columns([
                 'sales_person_id',
@@ -36,7 +41,7 @@ class Blackbox_EpaceImport_Model_Resource_Reports_Customer_Collection extends Ma
                 'estimates_cost' => 'sum(base_total_cost)'
             ])
             ->where('created_at > ?', date('y-m-d', strtotime('-1 month')))
-            ->where('status = ?', Blackbox_EpaceImport_Model_Estimate::STATUS_CONVERTED_TO_JOB)
+            ->where('status = ?', \Blackbox\EpaceImport\Model\Estimate::STATUS_CONVERTED_TO_JOB)
             ->group('sales_person_id');
 
         $this->getSelect()
@@ -67,7 +72,7 @@ class Blackbox_EpaceImport_Model_Resource_Reports_Customer_Collection extends Ma
 
         $estimatesSelect = $this->getConnection()->select()
             ->from($this->getTable('epacei/estimate'), ['customer_id', 'estimates' => 'sum(base_grand_total)'])
-            ->where('status = ?', Blackbox_EpaceImport_Model_Estimate::STATUS_CONVERTED_TO_JOB)
+            ->where('status = ?', \Blackbox\EpaceImport\Model\Estimate::STATUS_CONVERTED_TO_JOB)
             ->group('customer_id');
         $ordersSelect = $this->getConnection()->select()->from($this->getTable('sales/order'), ['customer_id', 'orders' => 'sum(base_grand_total)', 'billed' => 'sum(total_paid)'])->group('customer_id');
 

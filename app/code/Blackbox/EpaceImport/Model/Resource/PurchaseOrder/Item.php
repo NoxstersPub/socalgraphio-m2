@@ -1,13 +1,14 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder;
 
 /**
  * Flat sales order item resource
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item extends Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+class Item extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
 {
     /**
      * Event prefix

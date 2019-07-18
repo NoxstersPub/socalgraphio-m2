@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_EpaceImport_Model_Sales_Order_Shipment extends Blackbox_Notification_Model_Sales_Order_Shipment//Mage_Sales_Model_Order_Shipment
+namespace Blackbox\EpaceImport\Model\Sales\Order;
+
+class Shipment //extends Blackbox_Notification_Model_Sales_Order_Shipment//Mage_Sales_Model_Order_Shipment
 {
     public function dispose()
     {

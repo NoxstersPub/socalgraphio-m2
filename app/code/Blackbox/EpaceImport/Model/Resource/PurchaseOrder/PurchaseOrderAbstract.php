@@ -1,5 +1,4 @@
 <?php
-
 namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder;
 
 abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\EntityAbstract
@@ -67,7 +66,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      * @param string $table
      * @param array $joinCondition
      * @param string $column
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function addVirtualGridColumn($alias, $table, $joinCondition, $column)
     {
@@ -102,7 +101,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
     /**
      * Init virtual grid records for entity
      *
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     protected function _initVirtualGridColumns()
     {
@@ -122,7 +121,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      * Update records in grid table
      *
      * @param array|int $ids
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function updateGridRecords($ids)
     {
@@ -138,7 +137,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
 
                 $om = \Magento\Framework\App\ObjectManager::getInstance();	
                 /** @var \Magento\Framework\Event\ManagerInterface $manager */
-                $manager = $om->get('Magento\Framework\Event\ManagerInterface');
+                $manager = $om->get('\Magento\Framework\Event\ManagerInterface');
                 $manager->dispatch($this->_eventPrefix . '_update_grid_records', array('proxy' => $proxy));
                 $ids = $proxy->getIds();
             }
@@ -192,7 +191,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      * @param string $mainTableAlias
      * @param Zend_Db_Select $select
      * @param array $columnsToSelect
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function joinVirtualGridColumnsToSelect($mainTableAlias, Zend_Db_Select $select, &$columnsToSelect)
     {
@@ -262,7 +261,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @param string $attribute
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     protected function _beforeSaveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
@@ -284,7 +283,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @param string $attribute
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     protected function _afterSaveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
@@ -306,7 +305,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @param string $attribute
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function saveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
@@ -349,13 +348,16 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      * Perform actions before object save
      *
      * @param \Magento\Framework\DataObjectFactory $object
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
         if ($this->_useIncrementId && !$object->getIncrementId()) {
-            /* @var $entityType Mage_Eav_Model_Entity_Type */
-            $entityType = Mage::getModel('eav/entity_type')->loadByCode($this->_entityTypeForIncrementId);
+            /* @var $entityType \Mage\Eav\Model\Entity\Type */
+            $om = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $om->get('Magento\Eav\Entity\Type');
+            $entityType = $manager->loadByCode($this->_entityTypeForIncrementId);
             $object->setIncrementId($entityType->fetchNewIncrementId($object->getStoreId()));
         }
         parent::_beforeSave($object);
@@ -367,7 +369,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      *
      * @param \Magento\Framework\Model\AbstractModel $object
      * @param array $data
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     protected function _postSaveFieldsUpdate($object, $data)
     {
@@ -386,7 +388,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      * Set main resource table
      *
      * @param string $table
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function setMainTable($table)
     {
@@ -398,7 +400,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      * Save object data
      *
      * @param \Magento\Framework\Model\AbstractModel $object
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function save(\Magento\Framework\Model\AbstractModel $object)
     {
@@ -414,7 +416,7 @@ abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\
      *
      * @param string $field
      * @param int $entityId
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function updateOnRelatedRecordChanged($field, $entityId)
     {

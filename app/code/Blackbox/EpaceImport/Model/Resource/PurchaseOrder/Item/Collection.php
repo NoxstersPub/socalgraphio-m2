@@ -1,9 +1,10 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Item;
 
 /**
  * Flat purchase order collection
  */
-class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection extends Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abstract
+class Collection extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\CollectionAbstract
 {
     /**
      * Event prefix
@@ -38,7 +39,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection extends 
     /**
      * Assign parent items on after collection load
      *
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Item\Collection
      */
     protected function _afterLoad()
     {
@@ -57,7 +58,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection extends 
     /**
      * Set random items order
      *
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Item\Collection
      */
     public function setRandomOrder()
     {
@@ -69,13 +70,13 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection extends 
      * Set filter by item id
      *
      * @param mixed $item
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Item\Collection
      */
     public function addIdFilter($item)
     {
         if (is_array($item)) {
             $this->addFieldToFilter('item_id', array('in'=>$item));
-        } elseif ($item instanceof Blackbox_EpaceImport_Model_PurchaseOrder_Item) {
+        } elseif ($item instanceof \Blackbox\EpaceImport\Model\PurchaseOrder\Item) {
             $this->addFieldToFilter('item_id', $item->getId());
         } else {
             $this->addFieldToFilter('item_id', $item);
@@ -87,7 +88,7 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection extends 
      * Filter collection by parent_item_id
      *
      * @param int $parentId
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Item_Collection
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Item\Collection
      */
     public function filterByParent($parentId = null)
     {
