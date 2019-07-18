@@ -4,7 +4,7 @@ namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Item;
 /**
  * Flat purchase order collection
  */
-class Collection extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\PurchaseOrderAbstract
+class Collection extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\CollectionAbstract
 {
     /**
      * Event prefix

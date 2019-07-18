@@ -8,7 +8,7 @@ namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Status\History;
  * @package     \Blackbox\EpaceImport
  * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Collection extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\PurchaseOrderAbstract
+class Collection extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\CollectionAbstract
 {
     /**
      * Event prefix

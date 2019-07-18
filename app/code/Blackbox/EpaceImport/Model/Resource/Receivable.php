@@ -2,7 +2,7 @@
 
 namespace Blackbox\EpaceImport\Model\Resource;
 
-class Receivable extends \Magento\Framework\Model\ModelResource\Db\AbstractDb 
+class Receivable extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb 
 {
     protected function _construct()
     {

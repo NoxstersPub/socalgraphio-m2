@@ -53,7 +53,7 @@ class Carrier extends \Magento\Shipping\Model\Carrier\AbstractCarrier
         return $this->allowedMethods;
     }
 
-    public function collectRates(Mage_Shipping_Model_Rate_Request $request)
+    public function collectRates(\Magento\Quote\Model\Quote\Address\RateRequest $request)
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         

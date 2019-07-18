@@ -2,7 +2,7 @@
 
 namespace Blackbox\EpaceImport\Model\Resource;
 
-class Vendor extends \Magento\Framework\Model\ModelResource\Db\AbstractDb 
+class Vendor extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb 
 {
     protected function _construct()
     {

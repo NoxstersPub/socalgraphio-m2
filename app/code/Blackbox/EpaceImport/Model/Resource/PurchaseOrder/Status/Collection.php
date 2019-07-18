@@ -7,7 +7,7 @@ namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Status;
  * @package     \Blackbox\EpaceImport
  * @author      \Magento Framework Team <core@magentocommerce.com>
  */
-class Collection extends \Blackbox\Epace\Model\Resource\Epace\PurchaseOrder\Status\Collection
+class Collection extends \Blackbox\Epace\Model\Resource\Epace\POStatus\Collection
 {
     /**
      * Define label order

@@ -51,7 +51,7 @@ class Ups extends \Magento\Ups\Model\Carrier
                                 $cost = (float) $cost * $this->_getBaseCurrencyRate($responseCurrencyCode);
                             } else {
                                 $errorTitle = $helper->__('Can\'t convert rate from "%s-%s".', $responseCurrencyCode, $this->_request->getPackageCurrency()->getCode());
-                                $error = Mage::getModel('shipping/rate_result_error');
+                                $error = $objectManager->create('\Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory');
                                 $error->setCarrier('ups');
                                 $error->setCarrierTitle($this->getConfigData('title'));
                                 $error->setErrorMessage($errorTitle);
@@ -68,27 +68,28 @@ class Ups extends \Magento\Ups\Model\Carrier
             } else {
                 $arr = $xml->getXpath("//RatingServiceSelectionResponse/Response/Error/ErrorDescription/text()");
                 $errorTitle = (string)$arr[0][0];
-                $error = Mage::getModel('shipping/rate_result_error');
+                $error = $objectManager->create('\Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory');
                 $error->setCarrier('ups');
                 $error->setCarrierTitle($this->getConfigData('title'));
                 $error->setErrorMessage($this->getConfigData('specificerrmsg'));
             }
         }
-
-        $result = Mage::getModel('shipping/rate_result');
+        
+        $result = $objectManager->create('\Magento\Shipping\Model\Rate\Result');
+        
         $defaults = $this->getDefaults();
         if (empty($priceArr)) {
-            $error = Mage::getModel('shipping/rate_result_error');
+            $error = $objectManager->create('\Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory');
             $error->setCarrier('ups');
             $error->setCarrierTitle($this->getConfigData('title'));
             if(!isset($errorTitle)){
-                $errorTitle = Mage::helper('usa')->__('Cannot retrieve shipping rates');
+                $errorTitle = 'Cannot retrieve shipping rates';
             }
             $error->setErrorMessage($errorTitle);
             $result->append($error);
         } else {
             foreach ($priceArr as $method=>$price) {
-                $rate = Mage::getModel('shipping/rate_result_method');
+                $rate = $objectManager->create('\Magento\Quote\Model\Quote\Address\Rate');
                 $rate->setCarrier('ups');
                 $rate->setCarrierTitle($this->getConfigData('title'));
                 $rate->setMethod($method);

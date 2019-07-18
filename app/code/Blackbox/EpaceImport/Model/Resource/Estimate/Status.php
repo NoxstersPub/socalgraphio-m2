@@ -66,7 +66,7 @@ class Status extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mage\Framework\Model\Abstract $status
      * @return array
      */
-    public function getStoreLabels(\Mage\Framework\Model\AbstractModel $status)
+    public function getStoreLabels(\Magento\Framework\Model\AbstractModel $status)
     {
         $select = $this->_getWriteAdapter()->select()
             ->from($this->_labelsTable, array('store_id', 'label'))
@@ -80,7 +80,7 @@ class Status extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mage\Framework\Model\Abstract $object
      * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Status
      */
-    protected function _afterSave(\Mage\Framework\Model\AbstractModel $object)
+    protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {
         if ($object->hasStoreLabels()) {
             $labels = $object->getStoreLabels();
