@@ -1,6 +1,6 @@
 <?php
 
-namespace \Blackbox\Epace\Model\Resource\Epace\Estimate;
+namespace Blackbox\Epace\Model\Resource\Epace\Estimate;
 
 /**
  * @method Blackbox_Epace_Model_Epace_Estimate[] getItems()

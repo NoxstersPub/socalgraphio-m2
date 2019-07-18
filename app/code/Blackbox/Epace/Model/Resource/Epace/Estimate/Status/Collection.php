@@ -1,5 +1,5 @@
 <?php
-namespace \Blackbox\Epace\Model\Resource\Epace\Estimate\Status;
+namespace Blackbox\Epace\Model\Resource\Epace\Estimate\Status;
 
 /**
  * @method Blackbox_Epace_Model_Epace_Estimate_Status[] getItems()
