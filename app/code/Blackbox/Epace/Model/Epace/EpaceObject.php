@@ -5,8 +5,20 @@ namespace Blackbox\Epace\Model\Epace;
 abstract class EpaceObject extends \Magento\Framework\DataObjectFactory 
 {
     public static $debug = false;
+    
+    /**
+     * @var Blackbox\Epace\Helper\Api
+     */
     protected $_api;
+    
+    /**
+     * @var Blackbox\Epace\Helper\Mongo
+     */
     protected $_monoApi;
+    
+    /**
+     * @var string
+     */
     protected $_objectType;
     private $_childItems = [];
     private $_links = [];
@@ -17,6 +29,7 @@ abstract class EpaceObject extends \Magento\Framework\DataObjectFactory
 
     public function __construct($cache = null) {
         parent::__construct();
+        
         if (empty($this->_objectType)) {
             throw new \Exception('Object type should be initialized in _construct method.');
         }
