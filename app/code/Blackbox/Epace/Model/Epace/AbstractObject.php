@@ -5,6 +5,7 @@ namespace Blackbox\Epace\Model\Epace;
 abstract class AbstractObject extends Varien_Object {
 
     public static $debug = false;
+<<<<<<< Updated upstream:app/code/Blackbox/Epace/Model/Epace/AbstractObject.php
 
     /**
      * @var Blackbox_Epace_Helper_Api
@@ -16,6 +17,19 @@ abstract class AbstractObject extends Varien_Object {
      */
     protected $_monoApi;
 
+=======
+    
+    /**
+     * @var Blackbox\Epace\Helper\Api
+     */
+    protected $_api;
+    
+    /**
+     * @var Blackbox\Epace\Helper\Mongo
+     */
+    protected $_monoApi;
+    
+>>>>>>> Stashed changes:app/code/Blackbox/Epace/Model/Epace/EpaceObject.php
     /**
      * @var string
      */
@@ -33,6 +47,7 @@ abstract class AbstractObject extends Varien_Object {
 
     public function __construct($cache = null) {
         parent::__construct();
+        
         if (empty($this->_objectType)) {
             throw new \Exception('Object type should be initialized in _construct method.');
         }
