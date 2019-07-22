@@ -1,7 +1,7 @@
 <?php
 namespace Blackbox\Epace\Model\Epace;
 
-class Country extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Country extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {

@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Job;
 
-class Part extends \Blackbox\Epace\Model\Epace\Job_AbstractChild
+class Part extends \Blackbox\Epace\Model\Epace\Job\EpaceChild
     implements \Blackbox\Epace\Model\Resource\Epace\CombinedKeyInterface
 {
     protected function _construct()

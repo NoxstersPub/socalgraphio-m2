@@ -1,13 +1,7 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder;
 
-/**
- * Flat sales resource abstract
- *
- * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
- */
-abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mage_Sales_Model_Resource_Abstract
+abstract class PurchaseOrderAbstract extends \Magento\Sales\Model\ResourceModel\EntityAbstract
 {
     /**
      * Is grid available
@@ -72,16 +66,15 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
      * @param string $table
      * @param array $joinCondition
      * @param string $column
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function addVirtualGridColumn($alias, $table, $joinCondition, $column)
     {
         $table = $this->getTable($table);
 
         if (!in_array($alias, $this->getGridColumns())) {
-            Mage::throwException(
-                Mage::helper('sales')->__('Please specify a valid grid column alias name that exists in grid table.')
-            );
+            $errorMsg ='Please specify a valid grid column alias name that exists in grid table.';
+            throw new \Exception($errorMsg);
         }
 
         $this->_virtualGridColumns[$alias] = array(
@@ -108,15 +101,18 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
     /**
      * Init virtual grid records for entity
      *
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     protected function _initVirtualGridColumns()
     {
         $this->_virtualGridColumns = array();
         if ($this->_eventPrefix && $this->_eventObject) {
-            Mage::dispatchEvent($this->_eventPrefix . '_init_virtual_grid_columns', array(
-                $this->_eventObject => $this
-            ));
+            $om = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $om->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_init_virtual_grid_columns', array(
+                    $this->_eventObject => $this
+                ));
         }
         return $this;
     }
@@ -125,7 +121,7 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
      * Update records in grid table
      *
      * @param array|int $ids
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function updateGridRecords($ids)
     {
@@ -135,11 +131,14 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
             }
 
             if ($this->_eventPrefix && $this->_eventObject) {
-                $proxy = new Varien_Object();
+                $proxy = new \Magento\Framework\DataObjectFactory();
                 $proxy->setIds($ids)
                     ->setData($this->_eventObject, $this);
 
-                Mage::dispatchEvent($this->_eventPrefix . '_update_grid_records', array('proxy' => $proxy));
+                $om = \Magento\Framework\App\ObjectManager::getInstance();	
+                /** @var \Magento\Framework\Event\ManagerInterface $manager */
+                $manager = $om->get('\Magento\Framework\Event\ManagerInterface');
+                $manager->dispatch($this->_eventPrefix . '_update_grid_records', array('proxy' => $proxy));
                 $ids = $proxy->getIds();
             }
 
@@ -192,7 +191,7 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
      * @param string $mainTableAlias
      * @param Zend_Db_Select $select
      * @param array $columnsToSelect
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function joinVirtualGridColumnsToSelect($mainTableAlias, Zend_Db_Select $select, &$columnsToSelect)
     {
@@ -260,14 +259,17 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
     /**
      * Before save object attribute
      *
-     * @param Mage_Core_Model_Abstract $object
+     * @param \Magento\Framework\Model\AbstractModel $object
      * @param string $attribute
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
-    protected function _beforeSaveAttribute(Mage_Core_Model_Abstract $object, $attribute)
+    protected function _beforeSaveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
         if ($this->_eventObject && $this->_eventPrefix) {
-            Mage::dispatchEvent($this->_eventPrefix . '_save_attribute_before', array(
+            $om = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $om->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_save_attribute_before', array(
                 $this->_eventObject => $this,
                 'object' => $object,
                 'attribute' => $attribute
@@ -279,14 +281,17 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
     /**
      * After save object attribute
      *
-     * @param Mage_Core_Model_Abstract $object
+     * @param \Magento\Framework\Model\AbstractModel $object
      * @param string $attribute
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
-    protected function _afterSaveAttribute(Mage_Core_Model_Abstract $object, $attribute)
+    protected function _afterSaveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
         if ($this->_eventObject && $this->_eventPrefix) {
-            Mage::dispatchEvent($this->_eventPrefix . '_save_attribute_after', array(
+            $om = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $om->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_save_attribute_after', array(
                 $this->_eventObject => $this,
                 'object' => $object,
                 'attribute' => $attribute
@@ -298,13 +303,13 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
     /**
      * Perform actions after object save
      *
-     * @param Mage_Core_Model_Abstract $object
+     * @param \Magento\Framework\Model\AbstractModel $object
      * @param string $attribute
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
-    public function saveAttribute(Mage_Core_Model_Abstract $object, $attribute)
+    public function saveAttribute(\Magento\Framework\Model\AbstractModel $object, $attribute)
     {
-        if ($attribute instanceof Mage_Eav_Model_Entity_Attribute_Abstract) {
+        if ($attribute instanceof \Magento\Eav\Model\Entity\Attribute\AbstractAttribute) {
             $attribute = $attribute->getAttributeCode();
         }
 
@@ -316,7 +321,7 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
             $this->beginTransaction();
             try {
                 $this->_beforeSaveAttribute($object, $attribute);
-                $data = new Varien_Object();
+                $data = new \Magento\Framework\DataObjectFactory();
                 foreach ($attribute as $code) {
                     $data->setData($code, $object->getData($code));
                 }
@@ -342,14 +347,17 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
     /**
      * Perform actions before object save
      *
-     * @param Varien_Object $object
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @param \Magento\Framework\DataObjectFactory $object
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
-    protected function _beforeSave(Mage_Core_Model_Abstract $object)
+    protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
         if ($this->_useIncrementId && !$object->getIncrementId()) {
-            /* @var $entityType Mage_Eav_Model_Entity_Type */
-            $entityType = Mage::getModel('eav/entity_type')->loadByCode($this->_entityTypeForIncrementId);
+            /* @var $entityType \Mage\Eav\Model\Entity\Type */
+            $om = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $om->get('Magento\Eav\Entity\Type');
+            $entityType = $manager->loadByCode($this->_entityTypeForIncrementId);
             $object->setIncrementId($entityType->fetchNewIncrementId($object->getStoreId()));
         }
         parent::_beforeSave($object);
@@ -359,9 +367,9 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
     /**
      * Update field in table if model have been already saved
      *
-     * @param Mage_Core_Model_Abstract $object
+     * @param \Magento\Framework\Model\AbstractModel $object
      * @param array $data
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     protected function _postSaveFieldsUpdate($object, $data)
     {
@@ -380,7 +388,7 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
      * Set main resource table
      *
      * @param string $table
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function setMainTable($table)
     {
@@ -391,10 +399,10 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
     /**
      * Save object data
      *
-     * @param Mage_Core_Model_Abstract $object
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
-    public function save(Mage_Core_Model_Abstract $object)
+    public function save(\Magento\Framework\Model\AbstractModel $object)
     {
         if (!$object->getForceObjectSave()) {
             parent::save($object);
@@ -408,7 +416,7 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Abstract extends Mag
      *
      * @param string $field
      * @param int $entityId
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\PurchaseOrderAbstract
      */
     public function updateOnRelatedRecordChanged($field, $entityId)
     {

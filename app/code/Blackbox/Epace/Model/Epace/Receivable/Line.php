@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Receivable;
 
-class Line extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Line extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     const ENTRY_TYPE_SALES_DISTRIBUTION = 11;
     const ENTRY_TYPE_TAX_DISTRIBUTION = 7;

@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Flat sales estimate collection
- *
- * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
- */
-abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Collection_Abstract extends Mage_Sales_Model_Resource_Collection_Abstract
+namespace Blackbox\EpaceImport\Model\Resource\Estimate\Collection;
+
+abstract class EstimateAbstract extends \Magento\Sales\Model\ResourceModel\Order\Collection\AbstractCollection
 {
     /**
      * Estimate object
@@ -33,7 +28,8 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Collection_Abstract 
     {
         $this->_estimate = $estimate;
         if ($this->_eventPrefix && $this->_eventObject) {
-            Mage::dispatchEvent($this->_eventPrefix . '_set_estimate', array(
+            $manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_set_estimate', array(
                 'collection' => $this,
                 $this->_eventObject => $this,
                 'estimate' => $estimate
@@ -61,7 +57,7 @@ abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Collection_Abstract 
      */
     public function setEstimateFilter($estimate)
     {
-        if ($estimate instanceof Blackbox_EpaceImport_Model_Estimate) {
+        if ($estimate instanceof \Blackbox\EpaceImport\Model\Estimate) {
             $this->setEstimate($estimate);
             $estimateId = $estimate->getId();
             if ($estimateId) {

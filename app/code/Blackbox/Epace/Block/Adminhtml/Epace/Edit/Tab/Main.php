@@ -29,11 +29,11 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Store\Model\System\Store $systemStore,
-        \Blackbox\Epace\Model\Status $status,
+//        \Blackbox\Epace\Model\Epace\Estimate\Status $status,
         array $data = []
     ) {
         $this->_systemStore = $systemStore;
-        $this->_status = $status;
+//        $this->_status = $status;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 

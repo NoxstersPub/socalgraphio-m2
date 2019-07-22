@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_Epace_Model_Epace_FinishingOperation_Speed extends Blackbox_Epace_Model_Epace_AbstractObject
+namespace Blackbox\Epace\Model\Epace\FinishingOperation;
+
+class Speed extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     protected function _construct()
     {
@@ -19,7 +21,7 @@ class Blackbox_Epace_Model_Epace_FinishingOperation_Speed extends Blackbox_Epace
      * @param Blackbox_Epace_Model_Epace_FinishingOperation $operation
      * @return $this
      */
-    public function setFinishingOperation(Blackbox_Epace_Model_Epace_FinishingOperation $operation)
+    public function setFinishingOperation(\Blackbox\Epace\Model\Epace\FinishingOperation $operation)
     {
         return $this->_setObject('finishingOperation', $operation);
     }

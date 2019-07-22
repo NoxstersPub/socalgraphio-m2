@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_EpaceImport_Model_resource_Reports_Estimate_Collection extends Mage_Reports_Model_Resource_Order_Collection
+namespace Blackbox\EpaceImport\Model\Resource\Reports\Estimate;
+
+class Collection extends \Magento\Reports\Model\ResourceModel\Order\Collection
 {
     public function calculateMonthlySales($isFilter = 0)
     {
@@ -21,7 +23,7 @@ class Blackbox_EpaceImport_Model_resource_Reports_Estimate_Collection extends Ma
                 'average'  => "AVG({$expr})"
             ))
             ->where('main_table.created_at > ?', date('Y-m-d', strtotime('-1 month')))
-            ->where('status = ?', Blackbox_EpaceImport_Model_Estimate::STATUS_CONVERTED_TO_JOB);
+            ->where('status = ?', \Blackbox\EpaceImport\Model\Estimate::STATUS_CONVERTED_TO_JOB);
 
         return $this;
     }

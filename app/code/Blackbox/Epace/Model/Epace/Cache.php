@@ -5,7 +5,7 @@ namespace Blackbox\Epace\Model\Epace;
 class Cache
 {
     /**
-     * @var Blackbox_Epace_Model_Epace_AbstractObject[][]
+     * @var \Blackbox\Epace\Model\Epace\EpaceObject[][]
      */
     protected $cache = [];
 
@@ -14,13 +14,13 @@ class Cache
     /**
      * @param $type
      * @param $id
-     * @return Blackbox_Epace_Model_Epace_AbstractObject
+     * @return \Blackbox\Epace\Model\Epace\EpaceObject
      */
     public function load($type, $id)
     {
         $className = Mage::getConfig()->getModelClassName($type);
         if (!isset($this->cache[$className][$id])) {
-            /** @var Blackbox_Epace_Model_Epace_AbstractObject $object */
+            /** @var \Blackbox\Epace\Model\Epace\EpaceObject $object */
             $object = Mage::getModel($type, $this);
             $object->load($id);
             if (is_null($object->getId())) {

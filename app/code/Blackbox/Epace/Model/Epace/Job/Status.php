@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Job;
 
-class Status extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Status extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     const STATUS_AUTO_BILLING_OK = 'A';
     const STATUS_CLOSED = 'C';

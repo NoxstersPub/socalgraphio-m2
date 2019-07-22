@@ -1,14 +1,14 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Status\History;
 
 /**
  * Flat sales order status history collection
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Status_History_Collection
-    extends Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abstract
+class Collection extends \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\CollectionAbstract
 {
     /**
      * Event prefix
@@ -35,17 +35,17 @@ class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Status_History_Collectio
 
     /**
      * Get history object collection for specified instance (order, shipment, invoice or credit memo)
-     * Parameter instance may be one of the following types: Blackbox_EpaceImport_Model_PurchaseOrder,
-     * Blackbox_EpaceImport_Model_PurchaseOrder_Creditmemo, Blackbox_EpaceImport_Model_PurchaseOrder_Invoice, Blackbox_EpaceImport_Model_PurchaseOrder_Shipment
+     * Parameter instance may be one of the following types: \Blackbox\EpaceImport\Model\PurchaseOrder,
+     * \Blackbox\EpaceImport\Model\PurchaseOrder\Creditmemo, \Blackbox\EpaceImport\Model\PurchaseOrder\Invoice, \Blackbox\EpaceImport\Model\PurchaseOrder\Shipment
      *
      * @param mixed $instance
      * @param string $historyEntityName
      *
-     * @return Blackbox_EpaceImport_Model_PurchaseOrder_Status_History|null
+     * @return \Blackbox\EpaceImport\Model\PurchaseOrder\Status\History|null
      */
-    public function getUnnotifiedForInstance($instance, $historyEntityName=Blackbox_EpaceImport_Model_PurchaseOrder::HISTORY_ENTITY_NAME)
+    public function getUnnotifiedForInstance($instance, $historyEntityName = \Blackbox\EpaceImport\Model\PurchaseOrder::HISTORY_ENTITY_NAME)
     {
-        if(!$instance instanceof Blackbox_EpaceImport_Model_PurchaseOrder) {
+        if(!$instance instanceof \Blackbox\EpaceImport\Model\PurchaseOrder) {
             $instance = $instance->getOrder();
         }
         $this->setPurchaseOrder($instance)->setOrder('created_at', 'desc')

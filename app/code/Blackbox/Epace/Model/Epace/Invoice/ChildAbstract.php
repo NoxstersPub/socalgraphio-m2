@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace\Invoice;
 
-abstract class ChildAbstract extends \Blackbox\Epace\Model\Epace\AbstractObject
+abstract class ChildAbstract extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     /**
      * @return \Blackbox\Epace\Model\Epace\Invoice|bool

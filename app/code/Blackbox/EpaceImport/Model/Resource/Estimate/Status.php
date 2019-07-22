@@ -1,12 +1,13 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\Estimate;
 /**
  * Order status resource model
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_Estimate_Status extends Mage_Core_Model_Resource_Db_Abstract
+class Status extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
      * Status labels table
@@ -62,10 +63,10 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Status extends Mage_Core_Mode
     /**
      * Store labels getter
      *
-     * @param Mage_Core_Model_Abstract $status
+     * @param \Mage\Framework\Model\Abstract $status
      * @return array
      */
-    public function getStoreLabels(Mage_Core_Model_Abstract $status)
+    public function getStoreLabels(\Magento\Framework\Model\AbstractModel $status)
     {
         $select = $this->_getWriteAdapter()->select()
             ->from($this->_labelsTable, array('store_id', 'label'))
@@ -76,10 +77,10 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Status extends Mage_Core_Mode
     /**
      * Save status labels per store
      *
-     * @param Mage_Core_Model_Abstract $object
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Status
+     * @param \Mage\Framework\Model\Abstract $object
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Status
      */
-    protected function _afterSave(Mage_Core_Model_Abstract $object)
+    protected function _afterSave(\Magento\Framework\Model\AbstractModel $object)
     {
         if ($object->hasStoreLabels()) {
             $labels = $object->getStoreLabels();
@@ -111,7 +112,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Status extends Mage_Core_Mode
      * @param string $status
      * @param string $state
      * @param bool $isDefault
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Status
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Status
      */
     public function assignState($status, $state, $isDefault)
     {
@@ -138,7 +139,7 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Status extends Mage_Core_Mode
      *
      * @param string $status
      * @param string $state
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Status
+     * @return \Blackbox\EpaceImport\Model\Resource\Estimate\Status
      */
     public function unassignState($status, $state)
     {
@@ -147,9 +148,8 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Status extends Mage_Core_Mode
             ->where('state = ?', $state);
 
         if ($this->_getWriteAdapter()->fetchOne($select) == 1) {
-            throw new Mage_Core_Exception(
-                Mage::helper('sales')->__('Last status can\'t be unassigned from state.')
-            );
+            $errorMsg ='Last status can\'t be unassigned from state.';
+            throw new \Exception($errorMsg);
         }
         $select = $this->_getWriteAdapter()->select()
             ->from($this->_stateTable, 'is_default')

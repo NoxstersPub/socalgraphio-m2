@@ -172,7 +172,7 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
         
     }
 
-    public function renderFilters($filters, Blackbox_Epace_Model_Epace_AbstractObject $resource) {
+    public function renderFilters($filters, \Blackbox\Epace\Model\Epace\EpaceObject $resource) {
         $result = [];
         if (count($filters) == 1) {
             $result = $this->_renderFilter($filters[0], $resource);
@@ -230,7 +230,7 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
         return $orders;
     }
 
-    protected function _renderFilter($filter, Blackbox_Epace_Model_Epace_AbstractObject $resource) {
+    protected function _renderFilter($filter, \Blackbox\Epace\Model\Epace\EpaceObject $resource) {
         $definition = $resource->getDefinition();
         $definition['_created_at'] = 'date';
         $definition['_updated_at'] = 'date';

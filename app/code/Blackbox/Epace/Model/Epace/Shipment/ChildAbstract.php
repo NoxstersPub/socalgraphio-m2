@@ -1,8 +1,8 @@
 <?php
 
-namespace \Blackbox\Epace\Model\Epace\Shipment;
+namespace Blackbox\Epace\Model\Epace\Shipment;
 
-abstract class ChildAbstract extends \Blackbox\Epace\Model\Epace\AbstractObject
+abstract class ChildAbstract extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     /**
      * @return int

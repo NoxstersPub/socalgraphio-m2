@@ -1,14 +1,14 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\Estimate\Status\History;
 
 /**
  * Flat sales order status history collection
  *
  * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @package     \Blackbox\EpaceImport
+ * @author      Magento Framework Team <core@magentocommerce.com>
  */
-class Blackbox_EpaceImport_Model_Resource_Estimate_Status_History_Collection
-    extends Blackbox_EpaceImport_Model_Resource_Estimate_Collection_Abstract
+class Collection extends \Blackbox\EpaceImport\Model\Resource\Estimate\Collection\EstimateAbstract
 {
     /**
      * Event prefix
@@ -35,17 +35,17 @@ class Blackbox_EpaceImport_Model_Resource_Estimate_Status_History_Collection
 
     /**
      * Get history object collection for specified instance (order, shipment, invoice or credit memo)
-     * Parameter instance may be one of the following types: Blackbox_EpaceImport_Model_Estimate,
-     * Blackbox_EpaceImport_Model_Estimate_Creditmemo, Blackbox_EpaceImport_Model_Estimate_Invoice, Blackbox_EpaceImport_Model_Estimate_Shipment
+     * Parameter instance may be one of the following types: \Blackbox\EpaceImport\Model\Estimate,
+     * \Blackbox\EpaceImport\Model\Estimate\Creditmemo, \Blackbox\EpaceImport\Model\Estimate\Invoice, \Blackbox\EpaceImport\Model\Estimate\Shipment
      *
      * @param mixed $instance
      * @param string $historyEntityName
      *
-     * @return Blackbox_EpaceImport_Model_Estimate_Status_History|null
+     * @return \Blackbox\EpaceImport\Model\Estimate\Status\History|null
      */
-    public function getUnnotifiedForInstance($instance, $historyEntityName=Blackbox_EpaceImport_Model_Estimate::HISTORY_ENTITY_NAME)
+    public function getUnnotifiedForInstance($instance, $historyEntityName = \Blackbox\EpaceImport\Model\Estimate::HISTORY_ENTITY_NAME)
     {
-        if(!$instance instanceof Blackbox_EpaceImport_Model_Estimate) {
+        if(!$instance instanceof \Blackbox\EpaceImport\Model\Estimate) {
             $instance = $instance->getOrder();
         }
         $this->setEstimate($instance)->setOrder('created_at', 'desc')

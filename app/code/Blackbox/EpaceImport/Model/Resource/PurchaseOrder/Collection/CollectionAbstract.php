@@ -1,14 +1,12 @@
 <?php
+namespace Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection;
 
-/**
- * Flat purchase order collection
- */
-abstract class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abstract extends Mage_Sales_Model_Resource_Collection_Abstract
+abstract class CollectionAbstract extends \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
 {
     /**
      * PurchaseOrder object
      *
-     * @var Blackbox_EpaceImport_Model_PurchaseOrder
+     * @var \Blackbox\EpaceImport\Model\PurchaseOrder
      */
     protected $_purchaseOrder   = null;
 
@@ -22,14 +20,17 @@ abstract class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abst
     /**
      * Set sales purchase order model as parent collection object
      *
-     * @param Blackbox_EpaceImport_Model_PurchaseOrder $purchaseOrder
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abstract
+     * @param \Blackbox\EpaceImport\Model\PurchaseOrder $purchaseOrder
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\Abstract
      */
     public function setPurchaseOrder($purchaseOrder)
     {
         $this->_purchaseOrder = $purchaseOrder;
         if ($this->_eventPrefix && $this->_eventObject) {
-            Mage::dispatchEvent($this->_eventPrefix . '_set_purchase_order', array(
+            $om = \Magento\Framework\App\ObjectManager::getInstance();	
+            /** @var \Magento\Framework\Event\ManagerInterface $manager */
+            $manager = $om->get('Magento\Framework\Event\ManagerInterface');
+            $manager->dispatch($this->_eventPrefix . '_set_purchase_order', array(
                 'collection' => $this,
                 $this->_eventObject => $this,
                 'purchase_order' => $purchaseOrder
@@ -42,7 +43,7 @@ abstract class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abst
     /**
      * Retrieve sales purchase order as parent collection object
      *
-     * @return Blackbox_EpaceImport_Model_PurchaseOrder|null
+     * @return \Blackbox\EpaceImport\Model\PurchaseOrder|null
      */
     public function getPurchaseOrder()
     {
@@ -53,11 +54,11 @@ abstract class Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abst
      * Add purchase order filter
      *
      * @param int|Blackbox_EpaceImport_Model_PurchaseOrder $purchaseOrder
-     * @return Blackbox_EpaceImport_Model_Resource_PurchaseOrder_Collection_Abstract
+     * @return \Blackbox\EpaceImport\Model\Resource\PurchaseOrder\Collection\Abstract
      */
     public function setPurchaseOrderFilter($purchaseOrder)
     {
-        if ($purchaseOrder instanceof Blackbox_EpaceImport_Model_PurchaseOrder) {
+        if ($purchaseOrder instanceof \Blackbox\EpaceImport\Model\PurchaseOrder) {
             $this->setPurchaseOrder($purchaseOrder);
             $purchaseOrderId = $purchaseOrder->getId();
             if ($purchaseOrderId) {

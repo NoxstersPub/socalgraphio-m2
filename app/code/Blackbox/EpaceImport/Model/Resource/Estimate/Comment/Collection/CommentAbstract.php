@@ -1,24 +1,18 @@
 <?php
 
-/**
- * Flat sales order abstract comments collection, used as parent for: invoice, shipment, creditmemo
- *
- * @category    Mage
- * @package     Blackbox_EpaceImport
- * @author      Magento Core Team <core@magentocommerce.com>
- */
-abstract class Blackbox_EpaceImport_Model_Resource_Estimate_Comment_Collection_Abstract
-    extends Mage_Sales_Model_Resource_Collection_Abstract
+namespace Blackbox\EpaceImport\Model\Resource\Estimate\Comment\Collection;
+
+abstract class CommentAbstract  extends \Magento\Sales\Model\ResourceModel\Collection\AbstractCollection
 {
     /**
      * Set filter on comments by their parent item
      *
-     * @param Mage_Core_Model_Abstract|int $parent
-     * @return Blackbox_EpaceImport_Model_Resource_Estimate_Comment_Collection_Abstract
+     * @param \Magento\Framework\Model\AbstractModel|int $parent
+     * @return Blackbox\EpaceImport\Model\Resource\Estimate\Comment\Collection\Estimate_Comment_Collection_Abstract
      */
     public function setParentFilter($parent)
     {
-        if ($parent instanceof Mage_Core_Model_Abstract) {
+        if ($parent instanceof \Magento\Framework\Model\AbstractModel) {
             $parent = $parent->getId();
         }
         return $this->addFieldToFilter('parent_id', $parent);

@@ -4,7 +4,7 @@ namespace Blackbox\Epace\Model\Epace;
 
 use \Blackbox\Epace\Model\Epace\PersonsTrait;
 
-class Job extends \Blackbox\Epace\Model\Epace\AbstractObject {
+class Job extends \Blackbox\Epace\Model\Epace\EpaceObject {
 
     protected function _construct() {
         $this->_init('Job', 'job');

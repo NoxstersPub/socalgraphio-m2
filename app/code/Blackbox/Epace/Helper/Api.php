@@ -428,7 +428,7 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
         return $this->getObjectResponse($params, 'update', $objectType);
     }
 
-    public function renderFilters($filters, Blackbox_Epace_Model_Epace_AbstractObject $resource)
+    public function renderFilters($filters, \Blackbox\Epace\Model\Epace\EpaceObject $resource)
     {
         if (empty($filters)) {
             $idFieldName = $resource->getIdFieldName();
@@ -482,7 +482,7 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
         return $renderedOrder;
     }
 
-    protected function _renderFilter($filter, Blackbox_Epace_Model_Epace_AbstractObject $resource)
+    protected function _renderFilter($filter, \Blackbox\Epace\Model\Epace\EpaceObject $resource)
     {
         $definition = $resource->getDefinition();
         if (is_array($filter['value'])) {

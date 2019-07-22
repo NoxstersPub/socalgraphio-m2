@@ -1,6 +1,8 @@
 <?php
 
-class Blackbox_EpaceImport_Model_Resource_Reports_Receivable_Collection extends Blackbox_EpaceImport_Model_Resource_Receivable_Collection
+namespace Blackbox\EpaceImport\Model\Resource\Reports\Receivable;
+
+class Collection extends \Blackbox\EpaceImport\Model\Resource\Receivable\Collection
 {
 
     /**
@@ -69,7 +71,10 @@ class Blackbox_EpaceImport_Model_Resource_Reports_Receivable_Collection extends 
                 )
             ));
 
-            Mage::dispatchEvent('receivable_prepare_amount_expression', array(
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();	
+	/** @var \Magento\Framework\Event\ManagerInterface $manager */
+	$manager = $objectManager->get('Magento\Framework\Event\ManagerInterface');
+	$manager->dispatch('receivable_prepare_amount_expression', array(
                 'collection' => $this,
                 'expression_object' => $expressionTransferObject,
             ));

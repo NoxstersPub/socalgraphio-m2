@@ -4,7 +4,7 @@ namespace Blackbox\Epace\Model\Epace\Carton;
 
 use \Blackbox\Epace\Model\Epace\Job\Part\ChildTrait;
 
-class Content extends \Blackbox\Epace\Model\Epace\AbstractObject
+class Content extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
     
 
