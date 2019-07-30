@@ -86,6 +86,8 @@ abstract class Collection extends \Magento\Framework\Data\Collection
      */
     public function setModel($model)
     {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $this->scopeConfig->getValue('epace/mongo/database', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, null);
         if (is_string($model)) {
             $this->_model = $model;
             $this->setItemObjectClass(Mage::getConfig()->getModelClassName($model));
@@ -120,8 +122,11 @@ abstract class Collection extends \Magento\Framework\Data\Collection
      */
     public function getResource()
     {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $resourceName = $this->getResourceModelName();
+        
         if (empty($this->_resource)) {
-            $this->_resource = Mage::getModel($this->getResourceModelName());
+            $this->_resource = $objectManager->create('Blackbox\Epace\Model\ResourceEpace\\'.$resourceName);
         }
         return $this->_resource;
     }

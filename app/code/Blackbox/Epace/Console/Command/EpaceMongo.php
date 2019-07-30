@@ -11,6 +11,8 @@ namespace Blackbox\Epace\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Magento\Framework\App\Config\Storage\WriterInterface;
 
 /**
  * Class EpaceMongo
@@ -35,62 +37,274 @@ class EpaceMongo extends Command
     protected $processedShipments = [];
     protected $processedInvoices = [];
     protected $processedReceivables = [];
-
+    
     public static $debug = false;
+    protected $configKey = '';
 
     /**
      * @var Blackbox_EpaceImport_Helper_Data
      */
     protected $helper;
+    protected $configWriter;
 
-    public function __construct()
+
+    const HOST = 'host';
+    const DATABASE = 'database';
+    const GLOBALS = 'global';
+    const ESTIMATES = 'estimates';
+    const JOBS = 'jobs';
+    const JOBSFILTER = 'jobsFilter';
+    const PURCHASEORDERS = 'purchaseOrders';
+    const PURCHASEORDERSFILTER = 'pof';
+    const INVOICES = 'invoices';
+    const INVOICEFILTER = 'invoiceFilter';
+    const RECEIVABLES = 'receivables';
+    const RECEIVABLESFILTER = 'receivablesFilter';
+    const SHIPMENTS = 'shipments';
+    const SHIPMENTSFILTER = 'shipmentsFilter';
+    const FROM = 'from';
+    const TO = 'to';
+    const BULKWRITELIMIT = 'bulkWriteLimit';
+    const RESAVEENTITIES = 'resaveEngities';
+    const DATES = 'dates';
+    const CONFIGKEY = 'key';
+    const CONFIGSETTINGS = 'configSettings';
+    const MODE = 'mode';
+    const NOTIMPORTED = 'notImported';
+    const NOMONGOFILTER = 'noMongoFilter';
+    const PRINTDELETEDENTITIES = 'printDeletedEntities';
+    const DEBUG = "debug";
+
+    public function __construct(WriterInterface $configWriter)
     {
         parent::__construct();
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $this->helper = $objectManager->create('\Blackbox\Epace\Helper\Epace');
+        
+        $this->configWriter = $configWriter;
     }
 
     protected function configure()
     {
-        $this->setName('epace:mongo')->setDescription('Epace Mongo Console Command');
+        $this->addOption(
+                self::HOST,
+                null,
+                InputOption::VALUE_OPTIONAL,
+		'Host'
+                );
+        $this->addOption(
+                self::DATABASE,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Database'
+                );
+        $this->addOption(
+                self::GLOBALS,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Globals',
+                0
+                );
+        $this->addOption(
+                self::ESTIMATES,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Import Estimates',
+                0
+                );
+        $this->addOption(
+                self::SHIPMENTS,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Import Estimates',
+                0
+                );
+        $this->addOption(
+                self::SHIPMENTSFILTER,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Filter shipments by',
+                0
+                );
+        $this->addOption(
+                self::JOBS,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Import Jobs',
+                0
+                );
+        $this->addOption(
+                self::JOBSFILTER,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Filter Jobs by',
+                0
+                );
+        $this->addOption(
+                self::INVOICES,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Import Invoices',
+                0
+                );
+        $this->addOption(
+                self::INVOICEFILTER,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Filter Invoices by',
+                0
+                );
+        $this->addOption(
+                self::RECEIVABLES,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Import Receivables',
+                0
+                );
+        $this->addOption(
+                self::RECEIVABLESFILTER,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Filter RF',
+                0
+                );
+        $this->addOption(
+                self::PURCHASEORDERS,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Import PurchaseOrders',
+                0
+                );
+        $this->addOption(
+                self::PURCHASEORDERSFILTER,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Filter PurchaseOrders by',
+                0
+                );
+        $this->addOption(
+                self::FROM,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'From',
+                0
+                );
+        $this->addOption(
+                self::TO,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'To',
+                0
+                );
+        $this->addOption(
+                self::BULKWRITELIMIT,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Bulk Write Limit',
+                1
+                );
+        $this->addOption(
+                self::RESAVEENTITIES,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Resave entities',
+                1
+                );
+        $this->addOption(
+                self::DATES,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Resave dates',
+                1
+                );
+        $this->addOption(
+                self::CONFIGKEY,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Key'
+                );
+        $this->addOption(
+                self::CONFIGSETTINGS,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Config Settings'
+                );
+        $this->addOption(
+                self::MODE,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Import Mode'
+                );
+        $this->addOption(
+                self::DEBUG,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Debug Mode'
+                );
+        $this->addOption(
+                self::NOTIMPORTED,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'not Imported'
+                );
+        $this->addOption(
+                self::NOMONGOFILTER,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'No Mongo Filter'
+                );
+        $this->addOption(
+                self::PRINTDELETEDENTITIES,
+                null,   
+                InputOption::VALUE_OPTIONAL,
+		'Print Deleted Entities'
+                );
+        
+        $this->setName('epace:import')->setDescription('Epace Mongo Console Command');
+        
+        parent::configure();
     }
-    /**
-     * {@inheritdoc}
-     */
+    
+    /**Commented on will**/
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         error_reporting(E_ALL);
-        if ($this->getArg('debug')) {
+        if ( $input->getOption(self::DEBUG) ) {
             \Blackbox\Epace\Console\Command\EpaceMongoDebug::$debug = true;
         }
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        
+        if ( $input->getOption(self::CONFIGKEY) ) {
+            $this->configKey = $input->getOption(self::CONFIGKEY);
+        }
+        
         $this->saveStatus('running');
 
         try {
             try {
-                if ($this->getArg('config_settings')) {
+                if ( $input->getOption(self::CONFIGSETTINGS) ) {
                     /** @var Blackbox_Epace_Helper_Mongo $helper */
                     $helper = $objectManager->create('\Blackbox\Epace\Helper\Mongo');
-                    $this->manager = new MongoDB\Driver\Manager($helper->getHost());
+                    $this->manager = new \MongoDB\Driver\Manager($helper->getHost());
                     $this->database = $helper->getDatabase();
                 } else {
-                    $host = $this->getArg('host');
-                    $this->manager = new MongoDB\Driver\Manager($host);
+                    $host = $input->getOption(self::HOST);
+                    $this->manager = new \MongoDB\Driver\Manager($host);
 
-                    $this->database = $this->getArg('database');
+                    $this->database = $input->getOption(self::DATABASE);
                 }
                 if (!$this->database) {
                     throw new \Exception('No database specified.');
                 }
 
-                if ($this->getArg('bulkWriteLimit')) {
-                    \Blackbox\Epace\Console\Command\MongoEpaceCollection::$bulkWriteLimit = (int)$this->getArg('bulkWriteLimit');
+                if ( $input->getOption(self::BULKWRITELIMIT) ) {
+                    \Blackbox\Epace\Console\Command\MongoEpaceCollection::$bulkWriteLimit = (int)$input->getOption(self::BULKWRITELIMIT);
                 }
 
-                if ($mode = $this->getArg('mode')) {
+                if ($mode = $input->getOption(self::MODE)) {
                     switch ($mode) {
                         case 'notImported':
-                            $this->listNotImported();
+                            $this->listNotImported($input, $output);
                             break;
                         case 'fixDates':
                             $this->fixDates();
@@ -99,13 +313,13 @@ class EpaceMongo extends Command
                             $this->importVendors();
                             break;
                         case 'resave':
-                            $this->resaveEntities();
+                            $this->resaveEntities($input, $output);
                             break;
                         case 'delete':
                             $this->deleteEntities();
                             break;
                         case 'listDeleted':
-                            $this->printDeletedEntities();
+                            $this->printDeletedEntities($input, $output);
                             break;
                         default:
                             throw new \Exception('Unsupported mode. Allowed values: notImported, fixDats, vendors, resave, delete, listDeleted');
@@ -113,7 +327,8 @@ class EpaceMongo extends Command
                     return;
                 }
 
-                $this->importToMongo();
+                $this->importToMongo($input, $output);
+                
             } finally {
                 foreach ($this->collectionAdapters as $adapter) {
                     try {
@@ -134,13 +349,14 @@ class EpaceMongo extends Command
             $this->saveStatus('error', 'Exception in ' . $e->getFile() . ':' . $e->getLine() . '. Message: ' . $e->getMessage());
         }
     }
-
+    
     protected function saveStatus($status, $message = '')
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $storeManager = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
-        if ($this->getArg('key')) {
-            $storeManager->saveConfig('/epace_import/mongo/' . $this->getArg('key'), json_encode([
+        
+        if ( $this->configKey ) {
+            $this->configWriter->save('/epace_import/mongo/' . $this->configKey, json_encode([
                 'time' => time(),
                 'status' => $status,
                 'message' => $message
@@ -148,14 +364,15 @@ class EpaceMongo extends Command
         }
     }
 
-    public function importToMongo()
+    public function importToMongo(InputInterface $input, OutputInterface $output)
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $storeManager = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
-        $from = $this->getArg('from');
-        $to = $this->getArg('to');
+        
+        $from = $input->getOption(self::FROM);
+        $to = $input->getOption(self::TO);
 
-        if ($this->getArg('global')) {
+        if ( $input->getOption(self::GLOBALS) ) {
             $this->importEntities('salesPerson');
             $this->importEntities('salesCategory');
             $this->importEntities('salesTax');
@@ -171,7 +388,7 @@ class EpaceMongo extends Command
             $this->importEntities('pOStatus');
         }
 
-        if ($this->getArg('estimates')) {
+        if ( $input->getOption(self::ESTIMATES) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Estimate_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Estimate\Collection');
             if ($from) {
@@ -182,14 +399,14 @@ class EpaceMongo extends Command
             }
             $collection->setOrder('entryDate', 'ASC');
 
-            if ($this->getArg('ef')) {
-                $this->addFilter($collection, $this->getArg('ef'));
+            if ( $input->getOption(self::EF) ) {
+                $this->addFilter( $collection, $input->getOption(self::EF) );
             }
 
             $ids = $collection->loadIds();
             $count = count($ids);
 
-            if ($this->getArg('notImported')) {
+            if ( $input->getOption(self::NOTIMPORTED) ) {
                 $importedIds = $this->getCollectionAdapter('estimate')->loadIds();
                 foreach ($ids as $key => $id) {
                     if (in_array($id, $importedIds)) {
@@ -214,7 +431,7 @@ class EpaceMongo extends Command
             }
         }
 
-        if ($this->getArg('jobs')) {
+        if ( $input->getOption(self::JOBS) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Job_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Job\Collection');
             if ($from) {
@@ -225,14 +442,14 @@ class EpaceMongo extends Command
             }
             $collection->setOrder('dateSetup', 'ASC');
 
-            if ($this->getArg('jf')) {
-                $this->addFilter($collection, $this->getArg('jf'));
+            if ( $input->getOption(self::JOBSFILTER) ) {
+                $this->addFilter( $collection, $input->getOption(self::JOBSFILTER) );
             }
 
             $ids = $collection->loadIds();
             $count = count($ids);
 
-            if ($this->getArg('notImported')) {
+            if ( $input->getOption(self::NOTIMPORTED) ) {
                 $importedIds = $this->getCollectionAdapter('job')->loadIds();
                 foreach ($ids as $key => $id) {
                     if (in_array($id, $importedIds)) {
@@ -281,7 +498,7 @@ class EpaceMongo extends Command
             }
         }
 
-        if ($this->getArg('invoices')) {
+        if ( $input->getOption(self::INVOICES) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Invoice_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Invoice\Collection');
             if ($from) {
@@ -292,14 +509,14 @@ class EpaceMongo extends Command
             }
             $collection->setOrder('invoiceDate', 'ASC');
 
-            if ($this->getArg('if')) {
-                $this->addFilter($collection, $this->getArg('if'));
+            if ( $input->getOption(self::INVOICEFILTER) ) {
+                $this->addFilter( $collection, $input->getOption(self::INVOICEFILTER) );
             }
 
             $ids = $collection->loadIds();
             $count = count($ids);
 
-            if ($this->getArg('notImported')) {
+            if ( $input->getOption(self::NOTIMPORTED) ) {
                 $importedIds = $this->getCollectionAdapter('invoice')->loadIds();
                 foreach ($ids as $key => $id) {
                     if (in_array($id, $importedIds)) {
@@ -333,7 +550,7 @@ class EpaceMongo extends Command
             }
         }
 
-        if ($this->getArg('receivables')) {
+        if ( $input->getOption(self::RECEIVABLES) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Receivable_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Receivable\Collection');
             if ($from) {
@@ -344,14 +561,14 @@ class EpaceMongo extends Command
             }
             $collection->setOrder('dateSetup', 'ASC');
 
-            if ($this->getArg('rf')) {
-                $this->addFilter($collection, $this->getArg('rf'));
+            if ( $input->getOption(self::RECEIVABLESFILTER) ) {
+                $this->addFilter( $collection, $input->getOption(self::RECEIVABLESFILTER) );
             }
 
             $ids = $collection->loadIds();
             $count = count($ids);
 
-            if ($this->getArg('notImported')) {
+            if ( $input->getOption(self::NOTIMPORTED) ) {
                 $importedIds = $this->getCollectionAdapter('receivable')->loadIds();
                 foreach ($ids as $key => $id) {
                     if (in_array($id, $importedIds)) {
@@ -385,7 +602,7 @@ class EpaceMongo extends Command
             }
         }
 
-        if ($this->getArg('shipments')) {
+        if ( $input->getOption(self::SHIPMENTS) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Job_Shipment_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Job\Shipment\Collection');
             if ($from) {
@@ -396,14 +613,14 @@ class EpaceMongo extends Command
             }
             $collection->setOrder('date', 'ASC');
 
-            if ($this->getArg('sf')) {
-                $this->addFilter($collection, $this->getArg('sf'));
+            if ( $input->getOption(self::SHIPMENTSFILTER) ) {
+                $this->addFilter( $collection, $input->getOption(self::SHIPMENTSFILTER) );
             }
 
             $ids = $collection->loadIds();
             $count = count($ids);
 
-            if ($this->getArg('notImported')) {
+            if ( $input->getOption(self::NOTIMPORTED) ) {
                 $importedIds = $this->getCollectionAdapter('job_shipment')->loadIds();
                 foreach ($ids as $key => $id) {
                     if (in_array($id, $importedIds)) {
@@ -437,7 +654,7 @@ class EpaceMongo extends Command
             }
         }
 
-        if ($this->getArg('purchaseOrders')) {
+        if ( $input->getOption(self::PURCHASEORDERS) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Purchase_Order_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Purchase\Order\Collection');
             if ($from) {
@@ -448,14 +665,14 @@ class EpaceMongo extends Command
             }
             $collection->setOrder('dateEntered', 'ASC');
 
-            if ($this->getArg('pof')) {
-                $this->addFilter($collection, $this->getArg('pof'));
+            if ( $input->getOption(self::PURCHASEORDERSFILTER) ) {
+                $this->addFilter( $collection, $input->getOption(self::PURCHASEORDERSFILTER) );
             }
 
             $ids = $collection->loadIds();
             $count = count($ids);
 
-            if ($this->getArg('notImported')) {
+            if ($input->getOption(self::NOTIMPORTED) ) {
                 $importedIds = $this->getCollectionAdapter('purchase_order')->loadIds();
                 foreach ($ids as $key => $id) {
                     if (in_array($id, $importedIds)) {
@@ -533,14 +750,14 @@ class EpaceMongo extends Command
         }
     }
 
-    public function resaveEntities()
+    public function resaveEntities(InputInterface $input, OutputInterface $output)
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $storeManager = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
         
         \Blackbox\Epace\Model\Epace\EpaceObject::$useMongo = true;
 
-        $entities = array_filter(explode(',', $this->getArg('resave')));
+        $entities = array_filter(explode(',', $input->getOption(self::RESAVEENTITIES)));
         if (empty($entities)) {
             $this->writeln('Error: entities are empty.');
             return;
@@ -570,7 +787,7 @@ class EpaceMongo extends Command
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $storeManager = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
-        $collections = $this->manager->executeCommand($this->database, new MongoDB\Driver\Command(['listCollections' => 1, 'nameOnly' => true]));
+        $collections = $this->manager->executeCommand($this->database, new \MongoDB\Driver\Command(['listCollections' => 1, 'nameOnly' => true]));
         /** @var Blackbox_Epace_Helper_Data $helper */
         $helper = $objectManager->create('\Blackbox\Epace\Helper\Epace');
         foreach ($collections as $collection) {
@@ -963,7 +1180,7 @@ class EpaceMongo extends Command
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var Blackbox_Epace_Model_Resource_Epace_Collection $collection */
-        $collection = $objectManager->create('\Blackbox\Epace\Model\ResourceEpace\\'.$type.'\Collection');
+        $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\\'.$type.'\Collection');
         $adapter = $this->getCollectionAdapter($type);
         $this->writeln('Importing ' . $adapter->getCollectionName());
         $this->tabs++;
@@ -987,17 +1204,7 @@ class EpaceMongo extends Command
         return false;
     }
 
-//    protected function importShipVia($shipVia)
-//    {
-//        if ($shipVia instanceof Blackbox_Epace_Model_Epace_Ship_Via) {
-//            $this->getCollectionAdapter('ship_via')->insertOrUpdate($shipVia);
-//            if ($shipVia->getShipProvider()) {
-//                $this->getCollectionAdapter('ship_provider')->insertOrUpdate($shipVia->getShipProvider());
-//            }
-//        }
-//    }
-
-    protected function listNotImported()
+    protected function listNotImported(InputInterface $input, OutputInterface $output)
     {
         $entities = [
             'Estimate' => [
@@ -1048,12 +1255,12 @@ class EpaceMongo extends Command
         /** @var Blackbox_Epace_Helper_Data $epaceHelper */
         $epaceHelper = $objectManager->create('\Blackbox\Epace\Helper\Epace');
 
-        $dates = $this->getArg('dates');
+        $dates = $input->getOption(self::DATES);
 
         foreach ($entities as $entity => $settings) {
             $found = false;
             foreach ($settings['keys'] as $key) {
-                if ($this->getArg($key)) {
+                if ($input->getOption($key)) {
                     $found = true;
                     break;
                 }
@@ -1069,10 +1276,10 @@ class EpaceMongo extends Command
             /** @var Blackbox_Epace_Model_Resource_Epace_Collection $epaceCollection */
             $epaceCollection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\\'.$epaceModelType.'\Collection');
 
-            if ($from = $this->getArg('from')) {
+            if ( $from = $input->getOption(self::FROM) ) {
                 $epaceCollection->addFilter($settings['dateField'], ['gteq' => new \DateTime($from)]);
             }
-            if ($to = $this->getArg('to')) {
+            if ( $to = $input->getOption(self::TO) ) {
                 $epaceCollection->addFilter($settings['dateField'], ['lteq' => new \DateTime($to)]);
             }
 
@@ -1080,7 +1287,7 @@ class EpaceMongo extends Command
             $this->writeln(count($ids));
 
             $filter = [];
-            if (!$this->getArg('noMongoFilter')) {
+            if ( !$input->getOption(self::NOMONGOFILTER) ) {
                 if ($from) {
                     if (is_string($from) && !is_numeric($from)) {
                         $fromTimestamp = strtotime($from);
@@ -1176,11 +1383,11 @@ class EpaceMongo extends Command
         ];
     }
 
-    protected function printDeletedEntities()
+    protected function printDeletedEntities(InputInterface $input, OutputInterface $output)
     {
-        $entity = $this->getArg('e');
+        $entity = '';
         if (!$entity) {
-            $entity = $this->getArg('entity');
+            $entity = $input->getOption(self::PRINTDELETEDENTITIES);
         }
 
         if ($entity) {
@@ -1416,18 +1623,4 @@ class EpaceMongo extends Command
     {
         echo str_repeat("\t", $this->tabs) . $message . PHP_EOL;
     }
-
-//    protected function checkDatabase($database)
-//    {
-//        $result = $this->manager->executeCommand('admin', new MongoDB\Driver\Command(['listDatabases' => 1]));
-//        $databases = $result->toArray()[0];
-//
-//        foreach ($databases as $_database) {
-//            if ($_database->name == $database) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
 }

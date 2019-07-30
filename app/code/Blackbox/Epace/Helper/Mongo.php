@@ -1,5 +1,4 @@
 <?php
-
 namespace Blackbox\Epace\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
@@ -15,7 +14,7 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
     protected $database;
     protected $manager;
 
-    public function __construct(
+    public function __construct(mag
             \Magento\Framework\App\Helper\Context $context, 
             \Magento\Store\Model\StoreManagerInterface $storeManager, 
             \Magento\Cms\Model\Template\FilterProvider $filterProvider, 
@@ -29,7 +28,7 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
         $this->api = $model;
         $this->host = $this->scopeConfig->getValue('epace/mongo/host', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, null);
         $this->database = $this->scopeConfig->getValue('epace/mongo/database', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, null);
-        $this->manager = new MongoDB\Driver\Manager($this->host);
+        $this->manager = new \MongoDB\Driver\Manager($this->host);
     }
 
     public function setAuthInfo($username, $password) {
@@ -79,7 +78,7 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
     protected function _loadData($objectType, $params) {
         $objectType = ucfirst($objectType);
 
-        $query = new MongoDB\Driver\Query($params);
+        $query = new \MongoDB\Driver\Query($params);
         $rows = $this->manager->executeQuery($this->database . '.' . $objectType, $query);
         foreach ($rows as $row) {
             return (array) $row;
@@ -100,7 +99,7 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
         ];
 
 
-        $query = new MongoDB\Driver\Query($filter, $options);
+        $query = new \MongoDB\Driver\Query($filter, $options);
 
         $rows = $this->manager->executeQuery($this->database . '.' . $objectType, $query);
 
