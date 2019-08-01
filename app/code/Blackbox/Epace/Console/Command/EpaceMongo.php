@@ -1607,9 +1607,9 @@ class EpaceMongo extends Command
     protected function getCollectionAdapter($class)
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        if (!$this->collectionAdapters[$class]) {
+        if (!isset($this->collectionAdapters[$class]) || !$this->collectionAdapters[$class]) {
             $this->collectionAdapters[$class] = new MongoEpaceCollection($objectManager->create('\Blackbox\Epace\Model\Epace\\'.$class), $this->manager, $this->database);
-        }
+        } 
 
         return $this->collectionAdapters[$class];
     }

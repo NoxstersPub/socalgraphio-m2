@@ -4,7 +4,7 @@ namespace Blackbox\Epace\Model\Epace;
 
 class SalesPerson extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
-    protected function _construct()
+    public function _construct()
     {
         $this->_init('SalesPerson', 'id');
     }

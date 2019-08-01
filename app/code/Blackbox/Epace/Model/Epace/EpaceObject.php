@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace;
 
-abstract class EpaceObject extends \Magento\Framework\DataObjectFactory 
+abstract class EpaceObject extends \Magento\Framework\DataObject 
 {
     public static $debug = false;
     
@@ -30,14 +30,14 @@ abstract class EpaceObject extends \Magento\Framework\DataObjectFactory
     public function __construct($cache = null) {
         parent::__construct();
         
-        if (empty($this->_objectType)) {
-            throw new \Exception('Object type should be initialized in _construct method.');
-        }
+//        if (empty($this->_objectType)) {
+//            throw new \Exception('Object type should be initialized in _construct method.');
+//        }
         if ($cache instanceof \Blackbox\Epace\Model\Epace\Cache) {
             $this->_cache = $cache;
         }
     }
-
+    
     public function getObjectType() {
         return $this->_objectType;
     }
@@ -54,7 +54,7 @@ abstract class EpaceObject extends \Magento\Framework\DataObjectFactory
                     $id = (int) $id;
                     break;
                 case 'date':
-                    $id = new MongoDB\BSON\UTCDateTime(is_string($id) && !is_numeric($id) ? strtotime($id) : $id);
+                    $id = new \MongoDB\BSON\UTCDateTime(is_string($id) && !is_numeric($id) ? strtotime($id) : $id);
                     break;
             }
 

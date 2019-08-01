@@ -5,10 +5,9 @@ namespace Blackbox\Epace\Model\Epace;
 use \Blackbox\Epace\Model\Epace\PersonsTrait;
 
 class Estimate extends \Blackbox\Epace\Model\Epace\EpaceObject
-{
-    
+{   
 
-    protected function _construct()
+    public function _construct()
     {
         $this->_init('Estimate', 'id');
     }

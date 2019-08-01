@@ -116,7 +116,7 @@ class MongoEpaceCollection extends Command
 
     public function loadData($id)
     {
-        $query = new MongoDB\Driver\Query([
+        $query = new \MongoDB\Driver\Query([
             '_id' => $id
         ]);
         $rows = $this->manager->executeQuery($this->database . '.' . $this->getCollectionName(), $query);
@@ -131,7 +131,7 @@ class MongoEpaceCollection extends Command
         $options = [
             'projection' => ['_id' => 1]
         ];
-        $rows = $this->manager->executeQuery($this->database . '.' . $this->getCollectionName(), new MongoDB\Driver\Query($filter, $options))->toArray();
+        $rows = $this->manager->executeQuery($this->database . '.' . $this->getCollectionName(), new \MongoDB\Driver\Query($filter, $options))->toArray();
 
         $result = [];
         foreach ($rows as $row) {
@@ -155,7 +155,7 @@ class MongoEpaceCollection extends Command
     public function deleteId($id)
     {
         if (!$this->bulkWrite) {
-            $this->bulkWrite = new MongoDB\Driver\BulkWrite(['ordered' => true]);
+            $this->bulkWrite = new \MongoDB\Driver\BulkWrite(['ordered' => true]);
         }
 
         $this->bulkWrite->delete(['_id' => $this->_prepareIdValue($id)]);
@@ -211,7 +211,7 @@ class MongoEpaceCollection extends Command
         }
 
         if (!$this->bulkWrite) {
-            $this->bulkWrite = new MongoDB\Driver\BulkWrite(['ordered' => true]);
+            $this->bulkWrite = new \MongoDB\Driver\BulkWrite(['ordered' => true]);
         }
 
         $data = $this->_prepareData($data, true);
@@ -296,7 +296,7 @@ class MongoEpaceCollection extends Command
         }
 
         if (!$this->bulkWrite) {
-            $this->bulkWrite = new MongoDB\Driver\BulkWrite(['ordered' => true]);
+            $this->bulkWrite = new \MongoDB\Driver\BulkWrite(['ordered' => true]);
         }
 
         $this->bulkWrite->update(
