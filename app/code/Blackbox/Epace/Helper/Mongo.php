@@ -14,7 +14,7 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
     protected $database;
     protected $manager;
 
-    public function __construct(mag
+    public function __construct(
             \Magento\Framework\App\Helper\Context $context, 
             \Magento\Store\Model\StoreManagerInterface $storeManager, 
             \Magento\Cms\Model\Template\FilterProvider $filterProvider, 

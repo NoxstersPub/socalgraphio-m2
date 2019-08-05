@@ -2,6 +2,7 @@
 
 namespace Blackbox\Epace\Helper;
 
+use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
 
 class Epace extends \Magento\Framework\App\Helper\AbstractHelper{
