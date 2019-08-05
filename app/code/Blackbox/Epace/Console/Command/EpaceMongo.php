@@ -269,6 +269,7 @@ class EpaceMongo extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         error_reporting(E_ALL);
+        
         if ( $input->getOption(self::DEBUG) ) {
             \Blackbox\Epace\Console\Command\EpaceMongoDebug::$debug = true;
         }
