@@ -1920,6 +1920,9 @@ class EpaceImport extends \Magento\Framework\App\Helper\AbstractHelper{
 
     public function getStore()
     {
+        /** 
+         * It is implemented as Magento 1 standards
+         */
         return Mage::app()->getStore(1);
     }
 

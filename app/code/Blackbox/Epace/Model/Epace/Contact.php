@@ -34,7 +34,10 @@ class Contact extends \Blackbox\Epace\Model\Epace\EpaceObject
      * @param Blackbox_Epace_Model_Epace_SalesPerson $salesPerson
      * @return $this
      */
-    public function setSalesPerson(Blackbox_Epace_Model_Epace_SalesPerson $salesPerson)
+    /**
+     * It was argumented as Magento 1 standards
+     */
+    public function setSalesPerson(\Blackbox\Epace\Model\Epace\SalesPerson $salesPerson)
     {
         return $this->_setObject('salesPerson', $salesPerson);
     }
@@ -47,7 +50,8 @@ class Contact extends \Blackbox\Epace\Model\Epace\EpaceObject
         return $this->_getObject('country', 'country', 'efi/country', true);
     }
 
-    public function setCountry(Blackbox_Epace_Model_Epace_Country $country)
+    //  It was argumented as Magento 1 standards
+    public function setCountry(\Blackbox\Epace\Model\Epace\Country $country)
     {
         return $this->_setObject('country', $country);
     }

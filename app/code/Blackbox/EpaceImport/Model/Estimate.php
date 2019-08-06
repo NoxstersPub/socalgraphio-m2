@@ -735,6 +735,9 @@ class Estimate extends \Magento\Framework\Model\AbstractModel {
         }
 
         if (!$this->getIncrementId()) {
+            /** 
+             * It is implemented as Magento 1 standards
+             */
             $incrementId = Mage::getSingleton('eav/config')
                     ->getEntityType('estimate')
                     ->fetchNewIncrementId($this->getStoreId());

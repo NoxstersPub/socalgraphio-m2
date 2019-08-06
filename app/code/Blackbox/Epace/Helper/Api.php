@@ -272,14 +272,13 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper{
             $method => $methodParams
         ];
          
-		$out->writeln($method);
         $body = $this->sendParamsToServer(null, $params, '', $this->getMethodUrl('FindObjects'), array($this->getAuthHeader()));
  
         $responseNode = $body->children('urn://pace2020.com/epace/sdk/FindObjects')->{$method . 'Response'};
         if (!$responseNode) {
             $this->throwException('No response node found.', $body);
         }
-        $out = $responseNode->children()->out;
+        $out = $responseNode;
         if (!$out) {
             $this->throwException('No "out" node found.', $body);
         }

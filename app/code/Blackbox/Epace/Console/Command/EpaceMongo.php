@@ -47,6 +47,11 @@ class EpaceMongo extends Command
     protected $helper;
     protected $configWriter;
 
+    /**
+     * Date Time Variable added for error 
+     * Fatal error: Uncaught Error: Class 'Blackbox\Epace\Console\Command\DateTime' not found 
+     */
+    protected $timezone;
 
     const HOST = 'host';
     const DATABASE = 'database';
@@ -75,13 +80,14 @@ class EpaceMongo extends Command
     const PRINTDELETEDENTITIES = 'printDeletedEntities';
     const DEBUG = "debug";
 
-    public function __construct(WriterInterface $configWriter)
+    public function __construct(WriterInterface $configWriter, \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone)
     {
         parent::__construct();
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $this->helper = $objectManager->create('\Blackbox\Epace\Helper\Epace');
         
         $this->configWriter = $configWriter;
+        $this->timezone = $timezone;
     }
 
     protected function configure()
@@ -373,36 +379,52 @@ class EpaceMongo extends Command
         $from = $input->getOption(self::FROM);
         $to = $input->getOption(self::TO);
 
+        /**
+         * Commented on pupose, commented Classes needs to be mapped
+         */
         if ( $input->getOption(self::GLOBALS) ) {
-            $this->importEntities('salesPerson');
-            $this->importEntities('salesCategory');
-            $this->importEntities('salesTax');
-            $this->importEntities('cSR');
-            $this->importEntities('ship_provider');
-            $this->importEntities('ship_via');
-            $this->importEntities('country');
-            $this->importEntities('estimate_status');
-            $this->importEntities('job_status');
-            $this->importEntities('job_type');
-            $this->importEntities('invoice_extra_type');
-            $this->importEntities('purchase_order_type');
-            $this->importEntities('pOStatus');
+            $this->importEntities('SalesPerson');
+            $this->importEntities('SalesCategory');
+            $this->importEntities('SalesTax');
+            // $this->importEntities('CSR');
+            $this->importEntities('ShipmentType');
+            $this->importEntities('Ship\Via');
+            $this->importEntities('Country');
+            $this->importEntities('Estimate\Status');
+            $this->importEntities('Job\Status');
+            $this->importEntities('Job\Type');
+            $this->importEntities('Invoice\Extra\Type');
+            $this->importEntities('Purchase\Order\Type');
+            $this->importEntities('POStatus');
         }
 
         if ( $input->getOption(self::ESTIMATES) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Estimate_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Estimate\Collection');
+
+            /**
+             * The date time function is not for Magento
+             * The "-3 Months 00:00Am was not readable by the funcation so I am using default value for debugging"
+             */
+
             if ($from) {
-                $collection->addFilter('entryDate', ['gteq' => new DateTime($from)]);
+                $collection->addFilter('entryDate', ['gteq' => $this->timezone->date("2017-01-20T13:59:19+03:00")]);
             }
             if ($to) {
                 $collection->addFilter('entryDate', ['lteq' => new DateTime($to)]);
             }
             $collection->setOrder('entryDate', 'ASC');
 
-            if ( $input->getOption(self::EF) ) {
-                $this->addFilter( $collection, $input->getOption(self::EF) );
-            }
+            /**
+             * EF mapping needs to be added
+             * Fatal error: Uncaught Error: Undefined class constant 'EF'
+             */
+            /**
+             * Commenting it for debugging
+             */
+            // if ( $input->getOption(self::EF) ) {
+            //     $this->addFilter( $collection, $input->getOption(self::EF) );
+            // }
 
             $ids = $collection->loadIds();
             $count = count($ids);
@@ -435,8 +457,12 @@ class EpaceMongo extends Command
         if ( $input->getOption(self::JOBS) ) {
             /** @var Blackbox_Epace_Model_Resource_Epace_Job_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Job\Collection');
+
+            /**
+             * This piece of code needs to be update
+             */
             if ($from) {
-                $collection->addFilter('dateSetup', ['gteq' => new DateTime($from)]);
+                $collection->addFilter('dateSetup', ['gteq' => $this->timezone->date("2017-01-20T13:59:19+03:00")]);
             }
             if ($to) {
                 $collection->addFilter('dateSetup', ['lteq' => new DateTime($to)]);
@@ -659,10 +685,10 @@ class EpaceMongo extends Command
             /** @var Blackbox_Epace_Model_Resource_Epace_Purchase_Order_Collection $collection */
             $collection = $objectManager->create('\Blackbox\Epace\Model\Resource\Epace\Purchase\Order\Collection');
             if ($from) {
-                $collection->addFilter('dateEntered', ['gteq' => new DateTime($from)]);
+                $collection->addFilter('dateEntered', ['gteq' => $this->timezone->date("2017-01-20T13:59:19+03:00")]);
             }
             if ($to) {
-                $collection->addFilter('dateEntered', ['lteq' => new DateTime($to)]);
+                $collection->addFilter('dateEntered', ['lteq' => $this->timezone->date("2019-01-20T13:59:19+03:00")]);
             }
             $collection->setOrder('dateEntered', 'ASC');
 
@@ -1281,7 +1307,7 @@ class EpaceMongo extends Command
                 $epaceCollection->addFilter($settings['dateField'], ['gteq' => new \DateTime($from)]);
             }
             if ( $to = $input->getOption(self::TO) ) {
-                $epaceCollection->addFilter($settings['dateField'], ['lteq' => new \DateTime($to)]);
+                $epaceCollection->addFilter($settings['dateField'], ['lteq' => $this->timezone->date("2017-01-20T13:59:19+03:00")]);
             }
 
             $ids = $epaceCollection->loadIds();

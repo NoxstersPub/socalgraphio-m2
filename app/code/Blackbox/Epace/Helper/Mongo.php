@@ -292,6 +292,9 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
         }
     }
 
+    /**
+     * This piece of code needs to be changed.
+     */
     protected function throwException($message, $response) {
         /** 
          * It was implemented as Magento 1 standards

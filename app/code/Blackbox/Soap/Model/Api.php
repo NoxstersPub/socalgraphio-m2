@@ -101,6 +101,13 @@ class Api extends \Magento\Framework\Model\AbstractModel
         curl_setopt($ch, CURLOPT_TIMEOUT, 3000);
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+
+        /**
+         * See the xml built 
+         * I have studied the official Epace Documentation http://epace.phoenixlitho.com/static/WebHelp/system_tools/customization_toolkit_setup/api_soap/using_efi_pace_api_services.html if you put the hardcoded API it will start processing.
+         */
+        var_dump($this->baseUrl . $url);
+        
         $_headers = array("Content-Type: text/xml", "SOAPAction: \"{$this->actionBaseUrl}{$action}\"", 'Connection: close');
         if ($headers) {
             $_headers = array_merge($_headers, $headers);

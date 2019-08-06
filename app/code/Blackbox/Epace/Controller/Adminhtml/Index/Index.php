@@ -59,6 +59,9 @@ class Index extends \Magento\Backend\App\Action
                 $event->setSerializedData(serialize(array('error' => 'Not valid response')));
             }
         } catch (Exception $e) {
+            /** 
+             * It is implemented as Magento 1 standards
+             */
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             $event->setStatus(self::STATUS_WITH_ERRORS);
             $event->setSerializedData(serialize(array('error' => $e->getMessage())));

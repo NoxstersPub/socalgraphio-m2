@@ -43,7 +43,9 @@ class Collection extends \Magento\Reports\Model\ResourceModel\Order\Collection
                     $adapter->getIfNullSql('main_table.base_grand_total', 0)
                 )
             ));
-
+            /** 
+             * It is implemented as Magento 1 standards
+             */
             Mage::dispatchEvent('estimate_prepare_amount_expression', array(
                 'collection' => $this,
                 'expression_object' => $expressionTransferObject,

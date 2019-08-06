@@ -101,6 +101,9 @@ class History extends \Magento\Framework\Model\AbstractModel
         if ($this->getEstimate()) {
             return $this->getEstimate()->getStore();
         }
+        /** 
+         * It is implemented as Magento 1 standards
+         */
         return Mage::app()->getStore();
     }
 

@@ -16,6 +16,9 @@ class File extends \Magento\Framework\App\Helper\AbstractHelper
 
     public function getDir()
     {
+        /** 
+         * It is implemented as Magento 1 standards
+         */
         return Mage::getBaseDir('var') . DS . 'Epace';
     }
 
@@ -33,7 +36,9 @@ class File extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     public function deleteFile($path)
-    {
+    {   /** 
+         * It is implemented as Magento 1 standards
+         */
         $file = new Varien_Io_File();
         $file->rm($this->getFullPath($path));
     }

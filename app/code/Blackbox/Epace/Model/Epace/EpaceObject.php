@@ -2,7 +2,7 @@
 
 namespace Blackbox\Epace\Model\Epace;
 
-abstract class EpaceObject extends \Magento\Framework\DataObject 
+abstract class EpaceObject extends \Magento\Framework\DataObject
 {
     public static $debug = false;
     

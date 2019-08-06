@@ -7,8 +7,21 @@ class Cache
     /**
      * @var \Blackbox\Epace\Model\Epace\EpaceObject[][]
      */
+    protected $cacheEnabled = true;
+
     protected $cache = [];
 
+    public function getCacheEnabled()
+    {
+        return $this->cacheEnabled;
+    }
+
+    public function setCacheEnabled($enabled)
+    {
+        $this->cacheEnabled = (bool) $enabled;
+
+        return $this;
+    }
     private $disposing = false;
 
     /**
@@ -18,17 +31,22 @@ class Cache
      */
     public function load($type, $id)
     {
-        $className = Mage::getConfig()->getModelClassName($type);
-        if (!isset($this->cache[$className][$id])) {
-            /** @var \Blackbox\Epace\Model\Epace\EpaceObject $object */
-            $object = Mage::getModel($type, $this);
-            $object->load($id);
-            if (is_null($object->getId())) {
-                $object = false;
+
+        /** 
+         * It is implemented as Magento 1 standards
+         */
+            
+        // need follow up here too.
+        if ($this->cacheEnabled) {
+            if (isset($this->cache[$type][$id])) {
+                return $this->cache[$type][$id];
             }
-            $this->cache[$className][$id] = $object;
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $model = $objectManager->create($type);
+            return $this->cache[$type][$id] = $model->setGlobal(true)->load($id);
+        } else {
+            return $objectManager->create($type)->load($id);
         }
-        return $this->cache[$className][$id];
     }
 
     public function add($className, $id, $object)

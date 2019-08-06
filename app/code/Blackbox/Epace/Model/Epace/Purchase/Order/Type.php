@@ -1,6 +1,6 @@
 <?php
 
-namespace Blackbox\Epace\Model\Epace\Purchase_Order;
+namespace Blackbox\Epace\Model\Epace\Purchase\Order;
 
 class Type extends \Blackbox\Epace\Model\Epace\EpaceObject
 {
