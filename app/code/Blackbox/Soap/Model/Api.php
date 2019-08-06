@@ -1,5 +1,6 @@
 <?php
 namespace Blackbox\Soap\Model;
+use Magento\Store\Model\ScopeInterface;
 
 class Api extends \Magento\Framework\Model\AbstractModel
 {
@@ -157,6 +158,18 @@ class Api extends \Magento\Framework\Model\AbstractModel
 
     protected function _applyProxy($ch)
     {
+        /**
+         * This proxy need to be validated because the response is rejected by the server
+         */
+        $proxy = array(
+            'ip' => "12.235.31.106",
+            'user' => "scgct",
+            'password' => "scgct_8432",
+            'proxy' => "12.235.31.106:80",
+            /***Put the auth user here.**/
+            'auth' => "scgct:scgct_8432"
+          );
+        $this->setProxy($proxy);
         if ($this->proxy) {
             if (is_array($this->proxy)) {
                 if ($this->proxy['proxy']) {

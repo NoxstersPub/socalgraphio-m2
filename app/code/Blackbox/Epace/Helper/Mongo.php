@@ -293,9 +293,10 @@ class Mongo extends \Magento\Framework\App\Helper\AbstractHelper {
     }
 
     protected function throwException($message, $response) {
-        $e = new Blackbox_Epace_Model_Exception($message);
-        $e->setResponse($response);
-        throw $e;
+        /** 
+         * It was implemented as Magento 1 standards
+         */
+        return $message.' '.$response;
     }
 
 }
